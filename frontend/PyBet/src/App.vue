@@ -1,85 +1,65 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div>
+    <Navbar />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script setup>
+import Navbar from './components/layout/Navbar.vue';
+</script>
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Teko:wght@300..700&display=swap');
+  
+  :root {
+    --color-primary-gray-light: #cccccc;
+    --color-primary-gray-medium-light: #999999;
+    --color-primary-gray-medium: #666666;
+    --color-primary-gray-dark: #333333;
+    --color-primary-green: #98e827;
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+    --color-grey-100: #c4c4c4;
+    --color-grey-150: #b2b2b2;
+    --color-grey-200: #a0a0a0;
+    --color-grey-250: #8e8e8e;
+    --color-grey-300: #7c7c7c;
+    --color-grey-350: #6b6b6b;
+    --color-grey-400: #595959;
+    --color-grey-450: #474747;
+    --color-grey-500: #353535;
+    --color-grey-550: #232323;
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    --color-green-100: #ccf394;
+    --color-green-150: #bdf074;
+    --color-green-200: #adec54;
+    --color-green-250: #9ee934;
+    --color-green-300: #8ee118;
+    --color-green-350: #79c114;
+    --color-green-400: #65a111;
+    --color-green-450: #51810d;
+    --color-green-500: #3c600a;
+    --color-green-550: #284006;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  body {
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: var(--color-primary-gray-light);
+    color: var(--color-primary-gray-dark);
   }
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  h1 {
+    color: var(--color-primary-green);
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+  /* TODO: poprawic css dla sidebara */
+  .p-drawer-header {
+    background-color: var(--color-grey-550);
+    border-right: 1px solid var(--color-primary-gray-light);
+    color: var(--color-primary-gray-light);
+  }  
+  .p-drawer-content {
+    height: 100%;
+    background-color: var(--color-grey-550);
+    border-right: 1px solid var(--color-primary-gray-light);
+    color: var(--color-primary-gray-light);
   }
-}
 </style>
