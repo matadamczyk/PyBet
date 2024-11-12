@@ -1,2 +1,1 @@
 # casino
-Siwy to cwel
