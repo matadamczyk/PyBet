@@ -1,4 +1,4 @@
-# ZROBIC TO BEATIFULSUOP NIE TAK POZDRO
+# ZROBIdC TO BEATIFULSUOP NIE TAK POZDRO
 import urllib.request
 import re
 import match
