@@ -1,0 +1,1 @@
+ui pod porownywanie wydarzen (pokazuje najkorzystniejsze)
