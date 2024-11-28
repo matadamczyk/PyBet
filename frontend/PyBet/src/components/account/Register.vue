@@ -2,7 +2,6 @@
   <Dialog
     :visible="visible"
     @update:visible="updateVisible"
-    header="Register"
     modal
     class="custom-dialog"
     @hide="closeDialog"
@@ -77,22 +76,19 @@ const updateVisible = (value: boolean) => {
     width: 33.333333%;
   }
 }
-.custom-bg {
-  background-color: var(--color-grey-550);
-}
 img {
   filter: grayscale(100%);
 }
 .custom-title {
-  color: var(--color-grey-400);
+  color: var(--color-primary-gray-light);
 }
 .custom-subtitle {
-  color: var(--color-grey-500);
+  color: var(--color-primary-gray-medium-light);
 }
 .custom-link {
   color: var(--color-primary-green);
 }
 .custom-label {
-  color: var(--color-grey-400);
+  color: var(--color-primary-gray-light);
 }
 </style>

@@ -69,4 +69,16 @@ h1 {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
+.p-dialog {
+  border-radius: 20px !important;
+  box-shadow:var(--p-dialog-shadow);
+  background: var(--color-grey-500) !important;  
+}
+.p-drawer-header {
+  padding: 10px !important;
+}
+.p-button-text.p-button-secondary {
+  color: var(--color-primary-gray-medium-light) !important;
+  margin: 10px;
+}
 </style>
