@@ -45,7 +45,7 @@ jobs:
         run: npm run test:coverage --prefix frontend/PyBet
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: frontend/PyBet/coverage/*.json
@@ -89,7 +89,7 @@ jobs:
         run: npm run test:e2e:coverage --prefix frontend/PyBet
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: frontend/PyBet/coverage/*.json
