@@ -17,7 +17,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/vue-fontawesome": "^3.0.8",
-    "@primevue/themes": "^4.2.2",
+    "@primevue/themes": "^4.2.4",
     "pinia": "^2.2.6",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.2",
