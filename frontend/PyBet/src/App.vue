@@ -1,12 +1,12 @@
 <template>
   <div>
-    <Navbar />
+    <NavbarComponent />
   </div>
 </template>
 
 <script lang="ts" setup>
 // eslint-disable-next-line vue/multi-word-component-names
-import Navbar from './components/layout/Navbar.vue';
+import NavbarComponent from './components/layout/Navbar.vue';
 </script>
 
 <style>

@@ -16,6 +16,6 @@ app.use(router)
 app.use(PrimeVue)
 
 // eslint-disable-next-line vue/multi-word-component-names, vue/no-reserved-component-names
-app.component('Button', Button)
+app.component('PrimeButton', Button)
 
 app.mount('#app')
