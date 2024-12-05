@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts" setup>
+// eslint-disable-next-line vue/multi-word-component-names
 import Navbar from './components/layout/Navbar.vue';
 </script>
 
