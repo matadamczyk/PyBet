@@ -5,9 +5,14 @@ from pathlib import Path
 
 def save_odds_to_csv(data, site_name, csv_file='backend/data/odds/odds.csv'):
     csv_file = Path(csv_file)
-    columns = ['identifier', 'team1', 'team2', 
-               f'{site_name}course1', f'{site_name}courseX', f'{site_name}course2', 
-               f'{site_name}courseBTS', f'{site_name}courseNBTS']
+    columns = ['identifier', 
+               'team1', 
+               'team2', 
+               f'{site_name}course1', 
+               f'{site_name}courseX', 
+               f'{site_name}course2', 
+               f'{site_name}courseBTS', 
+               f'{site_name}courseNBTS']
     
     file_exists = os.path.isfile(csv_file)
     
