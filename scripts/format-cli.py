@@ -18,23 +18,19 @@ IGNORED_DIRECTORIES = ['node_modules', 'dist', 'build', '.git']
 
 def format_with_prettier(file_path, check=False):
     """Formats JavaScript, TypeScript, Vue, JSON, HTML, CSS files with Prettier."""
-    command = ["prettier", "--check" if check else "--write", file_path]
+    command = ["npx", "prettier", "--check" if check else "--write", file_path]
     try:
         subprocess.run(command, check=True)
         print(f"{'Checked' if check else 'Formatted'}: {file_path} (Prettier)")
-    except FileNotFoundError:
-        print("Prettier is not installed. Install it with: npm install -g prettier")
     except subprocess.CalledProcessError as e:
         print(f"Error {'checking' if check else 'formatting'} {file_path} with Prettier: {e}")
 
 def format_with_black(file_path, check=False):
     """Formats Python files with Black."""
-    command = ["black", "--check" if check else "", file_path]
+    command = ["black", "--check" if check else file_path]
     try:
         subprocess.run(command, check=True)
         print(f"{'Checked' if check else 'Formatted'}: {file_path} (Black)")
-    except FileNotFoundError:
-        print("Black is not installed. Install it with: pip install black")
     except subprocess.CalledProcessError as e:
         print(f"Error {'checking' if check else 'formatting'} {file_path} with Black: {e}")
 

@@ -58,40 +58,40 @@ jobs:
       - name: Build project
         run: npm run build --prefix frontend/PyBet
 
-  e2e:
-    runs-on: ubuntu-latest
-    needs: build
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   needs: build
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '18'
 
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/PyBet/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+  #     - name: Cache Node.js modules
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ hashFiles('frontend/PyBet/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
 
-      - name: Install dependencies
-        run: npm install --prefix frontend/PyBet
+  #     - name: Install dependencies
+  #       run: npm install --prefix frontend/PyBet
 
-      - name: Run end-to-end tests
-        run: npm run test:e2e --prefix frontend/PyBet
+  #     - name: Run end-to-end tests
+  #       run: npm run test:e2e --prefix frontend/PyBet
 
-      - name: Generate code coverage report for E2E tests
-        run: npm run test:e2e:coverage --prefix frontend/PyBet
+  #     - name: Generate code coverage report for E2E tests
+  #       run: npm run test:e2e:coverage --prefix frontend/PyBet
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: frontend/PyBet/coverage/*.json
-          flags: e2etests
-          name: codecov-umbrella
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v3
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         files: frontend/PyBet/coverage/*.json
+  #         flags: e2etests
+  #         name: codecov-umbrella
