@@ -48,9 +48,13 @@ const props = defineProps({
   visible: Boolean,
 })
 
+console.log(props)
+
 const emits = defineEmits(['close', 'update:visible'])
 
 const checked1 = ref(true)
+
+console.log(checked1)
 
 function closeDialog() {
   emits('close')
