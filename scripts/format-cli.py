@@ -27,7 +27,7 @@ def format_with_prettier(file_path, check=False):
 
 def format_with_black(file_path, check=False):
     """Formats Python files with Black."""
-    command = ["black", "--check" if check else file_path]
+    command = ["pipx", "run", "black", "--check" if check else file_path]
     try:
         subprocess.run(command, check=True)
         print(f"{'Checked' if check else 'Formatted'}: {file_path} (Black)")
