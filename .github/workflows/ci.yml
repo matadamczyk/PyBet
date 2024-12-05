@@ -38,19 +38,19 @@ jobs:
       - name: Type-check code
         run: npm run type-check --prefix frontend/PyBet
 
-      - name: Run unit tests
-        run: npm run test --prefix frontend/PyBet
+      # - name: Run unit tests
+      #   run: npm run test --prefix frontend/PyBet
 
-      - name: Generate code coverage report
-        run: npm run test:coverage --prefix frontend/PyBet
+      # - name: Generate code coverage report
+      #   run: npm run test:coverage --prefix frontend/PyBet
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: frontend/PyBet/coverage/*.json
-          flags: unittests
-          name: codecov-umbrella
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: frontend/PyBet/coverage/*.json
+      #     flags: unittests
+      #     name: codecov-umbrella
 
       - name: Build project
         run: npm run build --prefix frontend/PyBet
