@@ -1,12 +1,13 @@
 <template>
   <div>
     <AppNavbar />
+    <MainCard />
   </div>
 </template>
 
-<script lang="ts" setup>
-// eslint-disable-next-line vue/multi-word-component-names
+<script setup>
 import AppNavbar from './components/layout/AppNavbar.vue'
+import MainCard from './components/MainCard.vue'
 </script>
 
 <style>
@@ -62,5 +63,22 @@ h1 {
   background-color: var(--color-grey-550);
   border-right: 1px solid var(--color-primary-gray-light);
   color: var(--color-primary-gray-light);
+}
+.p-dialog-mask {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.p-dialog {
+  border-radius: 20px !important;
+  box-shadow:var(--p-dialog-shadow);
+  background: var(--color-grey-500) !important;  
+}
+.p-drawer-header {
+  padding: 10px !important;
+}
+.p-button-text.p-button-secondary {
+  color: var(--color-primary-gray-medium-light) !important;
+  margin: 10px;
 }
 </style>

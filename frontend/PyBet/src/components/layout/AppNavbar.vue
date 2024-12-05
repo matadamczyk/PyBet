@@ -10,15 +10,45 @@
       <span class="logo-label">PyBet</span>
     </div>
     <div class="flex space-x-8 mr-5 items-center">
-      <a class="register" href=""><span>Sign up</span></a>
-      <a class="normal" href="">Sign in</a>
+      <button class="register" @click="showRegisterDialog"><span>Sign up</span></button>
+      <button class="normal" @click="showSignInDialog">Sign in</button>
     </div>
+    <SignIn
+      :visible="signInVisible"
+      @update:visible="signInVisible = $event"
+      @close="signInVisible = false"
+    />
+    <RegisterAccount
+      :visible="registerVisible"
+      @update:visible="registerVisible = $event"
+      @close="registerVisible = false"
+    />
   </nav>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import ToggleMenu from '../ToggleMenu.vue'
+import SignIn from '../account/SignIn.vue'
+import RegisterAccount from '../account/RegisterAccount.vue'
+
+const signInVisible = ref(false)
+const registerVisible = ref(false)
+
+const showSignInDialog = () => {
+  signInVisible.value = true
+}
+
+const showRegisterDialog = () => {
+  registerVisible.value = true
+}
 </script>
+
+<style scoped>
+nav {
+  width: 100%;
+}
+</style>
 
 <style scoped>
 nav {
@@ -54,6 +84,12 @@ a {
   position: relative;
   text-decoration: none;
   color: inherit;
+  display: inline-block;
+}
+
+.normal {
+  position: relative;
+  display: inline-block;
 }
 
 .normal:hover {
@@ -72,6 +108,11 @@ a {
   transform-origin: right;
   transform: scaleX(0);
   transition: transform 0.3s ease-in-out;
+}
+
+.normal:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
 }
 
 .normal:hover::before {

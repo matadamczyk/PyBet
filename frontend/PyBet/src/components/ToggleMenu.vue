@@ -10,7 +10,7 @@
         necessitatibus iste ullam repudiandae qui accusantium odio labore vel.
       </p>
     </Drawer>
-    <Button
+    <PrimeButton
       icon="pi pi-bars"
       @click="visible = true"
       class="custom-button"
@@ -21,7 +21,6 @@
 
 <script lang="ts" setup>
 import Drawer from 'primevue/drawer'
-import Button from 'primevue/button'
 import { ref } from 'vue'
 
 const visible = ref(false)
