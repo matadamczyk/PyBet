@@ -17,6 +17,7 @@
 </template>
 
 <script lang="ts" setup>
+// eslint-disable-next-line vue/multi-word-component-names
 import ToggleMenu from "../ToggleMenu.vue";
 </script>
 
