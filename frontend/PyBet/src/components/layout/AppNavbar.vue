@@ -6,7 +6,7 @@
       <a class="normal" href="">Live<i class="fa fa-signal-stream"></i></a>
     </div>
     <div class="h-full object-contain flex space-x-8 ml-5 items-center">
-      <img src="@/assets/logo.png" alt="logo" class="h-full object-contain">
+      <img src="@/assets/logo.png" alt="logo" class="h-full object-contain" />
       <span class="logo-label">PyBet</span>
     </div>
     <div class="flex space-x-8 mr-5 items-center">
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import ToggleMenu from "../ToggleMenu.vue";
+import ToggleMenu from '../ToggleMenu.vue'
 </script>
 
 <style scoped>
@@ -30,7 +30,7 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; 
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,13 +41,13 @@ nav {
 }
 
 body {
-  margin: 0; 
-  padding: 0; 
+  margin: 0;
+  padding: 0;
 }
 
 img {
   height: 100%;
-  object-fit: contain; 
+  object-fit: contain;
 }
 
 a {
@@ -71,7 +71,7 @@ a {
   left: 0;
   transform-origin: right;
   transform: scaleX(0);
-  transition: transform .3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .normal:hover::before {
@@ -80,7 +80,8 @@ a {
 }
 
 .register {
-  background: linear-gradient(var(--color-green-300) 0 0) calc(100% - var(--p, 0%)) / var(--p, 0%) no-repeat;
+  background: linear-gradient(var(--color-green-300) 0 0) calc(100% - var(--p, 0%)) / var(--p, 0%)
+    no-repeat;
   background-color: var(--color-primary-gray-light);
   color: var(--color-grey-550);
   border-radius: 15px;
@@ -89,7 +90,9 @@ a {
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: 0.4s, background-position 0s;
+  transition:
+    0.4s,
+    background-position 0s;
 }
 
 .register:hover {

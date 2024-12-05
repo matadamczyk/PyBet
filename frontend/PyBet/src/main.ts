@@ -1,7 +1,7 @@
 import './assets/main.css'
-import 'primeicons/primeicons.css';
+import 'primeicons/primeicons.css'
 
-import App from './App.vue';
+import App from './App.vue'
 // eslint-disable-next-line vue/multi-word-component-names, vue/no-reserved-component-names
 import Button from 'primevue/button'
 import PrimeVue from 'primevue/config'

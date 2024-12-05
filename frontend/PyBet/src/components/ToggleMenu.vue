@@ -1,18 +1,30 @@
 <template>
   <div>
-    <Drawer v-model:visible="visible" header="Menu" class="custom-sidebar w-full md:w-20rem lg:w-30rem">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus consequuntur quaerat necessitatibus iste ullam repudiandae qui accusantium odio labore vel.</p>
+    <Drawer
+      v-model:visible="visible"
+      header="Menu"
+      class="custom-sidebar w-full md:w-20rem lg:w-30rem"
+    >
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus consequuntur quaerat
+        necessitatibus iste ullam repudiandae qui accusantium odio labore vel.
+      </p>
     </Drawer>
-    <Button icon="pi pi-bars" @click="visible = true" class="custom-button" :style="{ fontSize: '1.5rem' }"/>
+    <Button
+      icon="pi pi-bars"
+      @click="visible = true"
+      class="custom-button"
+      :style="{ fontSize: '1.5rem' }"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import Drawer from 'primevue/drawer';
-import Button from 'primevue/button';
-import { ref } from "vue";
+import Drawer from 'primevue/drawer'
+import Button from 'primevue/button'
+import { ref } from 'vue'
 
-const visible = ref(false);
+const visible = ref(false)
 </script>
 
 <style scoped>
@@ -26,7 +38,7 @@ const visible = ref(false);
 }
 
 .custom-button .pi {
-  color: inherit; 
+  color: inherit;
   transition: color 0.3s ease;
 }
 

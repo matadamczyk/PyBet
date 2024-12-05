@@ -38,6 +38,9 @@ jobs:
       - name: Type-check code
         run: npm run type-check --prefix frontend/PyBet
 
+      - name: Check code formatting
+        run: python3 scripts/format-cli.py js ts vue json html css py --check
+
       # - name: Run unit tests
       #   run: npm run test --prefix frontend/PyBet
 
@@ -78,9 +81,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install --prefix frontend/PyBet
-
-      - name: Build project
-        run: npm run build --prefix frontend/PyBet
 
       - name: Run end-to-end tests
         run: npm run test:e2e --prefix frontend/PyBet
