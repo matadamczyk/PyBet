@@ -1,4 +1,4 @@
-# paths to ignore
+node_modules
+**/node_modules
+**/.env
 
-/frontend/PyBet/node_modules
-notes.txt

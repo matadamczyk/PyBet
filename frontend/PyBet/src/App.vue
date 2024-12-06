@@ -1,12 +1,12 @@
 <template>
   <div>
-    <Navbar />
+    <AppNavbar />
     <MainCard />
   </div>
 </template>
 
-<script setup>
-import Navbar from './components/layout/Navbar.vue'
+<script lang="ts" setup>
+import AppNavbar from './components/layout/AppNavbar.vue'
 import MainCard from './components/MainCard.vue'
 </script>
 
@@ -71,8 +71,8 @@ h1 {
 }
 .p-dialog {
   border-radius: 20px !important;
-  box-shadow:var(--p-dialog-shadow);
-  background: var(--color-grey-500) !important;  
+  box-shadow: var(--p-dialog-shadow);
+  background: var(--color-grey-500) !important;
 }
 .p-drawer-header {
   padding: 10px !important;

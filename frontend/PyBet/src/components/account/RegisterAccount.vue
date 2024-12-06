@@ -6,13 +6,13 @@
     class="custom-dialog"
     @hide="closeDialog"
   >
-    <div class="custom-bg p-6 shadow rounded-border w-full mx-auto">
+    <div class="custom-bg px-6 py-6 md:px-8 lg:px-10">
       <div class="text-center mb-8">
         <img class="w-20 h-auto mx-auto" src="@/assets/logo.png" alt="logo" />
 
-        <div class="custom-title text-3xl font-medium mb-4">Welcome Back</div>
-        <span class="custom-subtitle font-medium leading-normal">Don't have an account?</span>
-        <a class="custom-link font-medium no-underline ml-2 cursor-pointer">Create today!</a>
+        <div class="custom-title text-3xl font-medium mb-4">Join Us</div>
+        <span class="custom-subtitle font-medium leading-normal">Already have an account?</span>
+        <a class="custom-link font-medium no-underline ml-2 cursor-pointer">Sign in</a>
       </div>
 
       <div>
@@ -22,17 +22,17 @@
         <label for="password1" class="custom-label font-medium mb-2 block">Password</label>
         <InputText id="password1" type="password" placeholder="Password" class="w-full mb-4" />
 
-        <div class="flex items-center justify-between mb-12">
-          <div class="flex items-center">
-            <Checkbox id="rememberme1" v-model="checked1" :binary="true" class="mr-2" />
-            <label for="rememberme1">Remember me</label>
-          </div>
-          <a class="custom-link font-medium no-underline ml-2 text-right cursor-pointer"
-            >Forgot password?</a
-          >
-        </div>
+        <label for="confirmPassword1" class="custom-label font-medium mb-2 block"
+          >Confirm Password</label
+        >
+        <InputText
+          id="confirmPassword1"
+          type="password"
+          placeholder="Confirm Password"
+          class="w-full mb-4"
+        />
 
-        <Button label="Sign In" icon="pi pi-user" class="w-full" />
+        <Button label="Register" icon="pi pi-user" class="w-full" />
       </div>
     </div>
   </Dialog>
@@ -42,7 +42,6 @@
 import { ref, defineProps, defineEmits } from 'vue'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
-import Checkbox from 'primevue/checkbox'
 import Button from 'primevue/button'
 
 const props = defineProps({
@@ -54,6 +53,8 @@ console.log(props)
 const emits = defineEmits(['close', 'update:visible'])
 
 const checked1 = ref(true)
+
+console.log(checked1)
 
 function closeDialog() {
   emits('close')
@@ -95,4 +96,3 @@ img {
   color: var(--color-primary-gray-light);
 }
 </style>
-
