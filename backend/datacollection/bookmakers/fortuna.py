@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 def get_all_matches(url):
     def correct_team_name(team_name):
         if team_name.startswith("Man."):
@@ -12,15 +16,25 @@ def get_all_matches(url):
         if response.status_code != 200:
             print(f"Błąd pobierania strony: {response.status_code}")
             return []
+<<<<<<< HEAD
         
         soup = BeautifulSoup(response.text, "html.parser")
         
+=======
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+>>>>>>> origin/main
         event_links = []
         for link in soup.find_all("a", class_="event-link js-event-link"):
             href = link.get("href")
             if href:
                 event_links.append("https://www.efortuna.pl" + href)
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/main
         return event_links
 
     def get_match_teams_and_odds(event_url):
@@ -28,9 +42,15 @@ def get_all_matches(url):
         if response.status_code != 200:
             print(f"Błąd pobierania strony wydarzenia: {response.status_code}")
             return None
+<<<<<<< HEAD
         
         soup = BeautifulSoup(response.text, "html.parser")
         
+=======
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+>>>>>>> origin/main
         market_name = soup.find("span", class_="market-name")
         if market_name:
             match_text = market_name.get_text(strip=True)
@@ -38,12 +58,17 @@ def get_all_matches(url):
                 team1, team2 = match_text.split(" - ")
                 team1 = correct_team_name(team1)
                 team2 = correct_team_name(team2)
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> origin/main
                 odds = {}
                 odds_section = soup.find_all("td", class_="col-odds")
                 if len(odds_section) >= 3:
                     odd1 = odds_section[0].find("span", class_="odds-value")
                     if odd1:
+<<<<<<< HEAD
                         odds["course1"] = format(float(odd1.text.strip().replace(",", ".")), ".2f")
                     
                     oddX = odds_section[1].find("span", class_="odds-value")
@@ -54,25 +79,60 @@ def get_all_matches(url):
                     if odd2:
                         odds["course2"] = format(float(odd2.text.strip().replace(",", ".")), ".2f")
                 
+=======
+                        odds["course1"] = format(
+                            float(odd1.text.strip().replace(",", ".")), ".2f"
+                        )
+
+                    oddX = odds_section[1].find("span", class_="odds-value")
+                    if oddX:
+                        odds["courseX"] = format(
+                            float(oddX.text.strip().replace(",", ".")), ".2f"
+                        )
+
+                    odd2 = odds_section[2].find("span", class_="odds-value")
+                    if odd2:
+                        odds["course2"] = format(
+                            float(odd2.text.strip().replace(",", ".")), ".2f"
+                        )
+
+>>>>>>> origin/main
                 return {
                     "identifier": f"{team1}:{team2}",
                     "team1": team1,
                     "team2": team2,
+<<<<<<< HEAD
                     **odds
                 }
         
+=======
+                    **odds,
+                }
+
+>>>>>>> origin/main
         return None
 
     event_links = get_match_links(url)
     matches = []
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/main
     for event_url in event_links:
         match_data = get_match_teams_and_odds(event_url)
         if match_data:
             matches.append(match_data)
+<<<<<<< HEAD
     
     return matches
 
+=======
+
+    return matches
+
+
+>>>>>>> origin/main
 url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"
 all_matches = get_all_matches(url)
 
