@@ -16,7 +16,8 @@ def save_chances_to_csv(data, filename):
         for match in data:
             writer.writerow(match)
 
-if __name__ == "__main__":
+
+def main_func():
     bookmakers = [
         ("betclic", "https://www.betclic.pl/pilka-nozna-sfootball/premier-league-c3", fetch_matches_overview),
         ("sts", "https://www.sts.pl/zaklady-bukmacherskie/pilka-nozna/anglia/premier-league/184/30862/86451", get_data),
@@ -37,3 +38,7 @@ if __name__ == "__main__":
     save_chances_to_csv(chances_data, 'backend/data/API/chances.csv')
     profitable = find_profitable_events(odds_data, 'backend/data/API/chances.csv')
     save_to_json(profitable, 'backend/data/profitable/profitable.json')
+
+
+if __name__ == "__main__":
+    main_func()
