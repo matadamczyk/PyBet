@@ -80,9 +80,9 @@ def get_all_matches(url):
 
     return matches
 
+if __name__ == "__main__":
+    url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"
+    all_matches = get_all_matches(url)
 
-url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"
-all_matches = get_all_matches(url)
-
-for match in all_matches:
-    print(match)
+    for match in all_matches:
+        print(match)

@@ -4,41 +4,42 @@ import requests
 
 
 def get_bts(url):
-    from selenium import webdriver
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.webdriver.chrome.options import Options
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Run Chrome in headless mode
-    chrome_options.add_argument("--disable-gpu")  # Optional: for compatibility with some environments
-    chrome_options.add_argument("--no-sandbox")  # Optional: for environments like Linux servers
+    # from selenium import webdriver
+    # from selenium.webdriver.common.by import By
+    # from selenium.webdriver.support.ui import WebDriverWait
+    # from selenium.webdriver.support import expected_conditions as EC
+    # from selenium.webdriver.chrome.options import Options
+    # chrome_options = Options()
+    # chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+    # chrome_options.add_argument("--disable-gpu")  # Optional: for compatibility with some environments
+    # chrome_options.add_argument("--no-sandbox")  # Optional: for environments like Linux servers
 
-    # Set up Selenium WebDriver
-    driver = webdriver.Chrome(options=chrome_options)  # Ensure the WebDriver path is correct
-    driver.get(url)
+    # # Set up Selenium WebDriver
+    # driver = webdriver.Chrome(options=chrome_options)  # Ensure the WebDriver path is correct
+    # driver.get(url)
 
-    try:
-        # Wait for the parent element to be visible
-        wait = WebDriverWait(driver, 30)
-        parent_element = wait.until(
-            EC.presence_of_element_located((By.XPATH, "/html/body/app-mweb/div/div/div/div[1]/div/div[2]/app-match-detail-prematch/app-match-detail/div/div[4]/app-prematch-odds/div/app-odds-page/app-match-details-group[2]"))
-        )
+    # try:
+    #     # Wait for the parent element to be visible
+    #     wait = WebDriverWait(driver, 30)
+    #     parent_element = wait.until(
+    #         EC.presence_of_element_located((By.XPATH, "/html/body/app-mweb/div/div/div/div[1]/div/div[2]/app-match-detail-prematch/app-match-detail/div/div[4]/app-prematch-odds/div/app-odds-page/app-match-details-group[2]"))
+    #     )
         
-        # Retrieve all text within the parent element
-        text_content = parent_element.text.split("\n")
+    #     # Retrieve all text within the parent element
+    #     text_content = parent_element.text.split("\n")
 
-        # Print the extracted text
-        # print("Extracted Text:")
-        # print(text_content)
+    #     # Print the extracted text
+    #     # print("Extracted Text:")
+    #     # print(text_content)
 
-    except Exception as e:
-        print("An error occurred:", e)
+    # except Exception as e:
+    #     print("An error occurred:", e)
 
-    finally:
-        driver.quit()
+    # finally:
+    #     driver.quit()
 
-    return (text_content[2],text_content[4])
+    # return (text_content[2],text_content[4])
+    return(0,0)
 
 
 def get_data(url):

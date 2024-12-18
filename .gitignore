@@ -1,3 +1,7 @@
 **/node_modules
 **/.env
 **/__pycache__
+*.pkl
+chances.csv
+odds.csv
+profitable.json

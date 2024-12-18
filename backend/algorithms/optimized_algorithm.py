@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def train_and_save_model():
-    df_dirty = pd.read_csv('oczyszczonyDataSet.csv')
+    df_dirty = pd.read_csv('backend/algorithms/oczyszczonyDataSet.csv')
     df = df_dirty[['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'FTR', 'HTHG', 'HTAG', 'HTR', 'HS', 'AS', 'HST', 'AST', 
                    'HF', 'AF', 'HC', 'AC', 'HY', 'AY', 'HR', 'AR']]
     avg_home_scored = float(df.FTHG.sum()) / len(df)
@@ -69,7 +69,7 @@ def predict_match_outcome(home_team, away_team):
     draw_prob = probabilities[1]
     away_win_prob = probabilities[0]
     match_id = f"{home_team}:{away_team}"
-    print(f"{match_id} {home_win_prob:.2f} {draw_prob:.2f} {away_win_prob:.2f}")
+    return [match_id,home_win_prob,draw_prob, away_win_prob]
 
 if __name__ == "__main__":
     train_and_save_model()
