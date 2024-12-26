@@ -1,7 +1,10 @@
+from django.http import JsonResponse
 import requests
 from bs4 import BeautifulSoup
 
-def get_all_matches(url):
+def get_matches(request):
+    url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"
+    
     def correct_team_name(team_name):
         if team_name.startswith("Man."):
             return "Manchester " + team_name.split(".")[1]
@@ -23,7 +26,7 @@ def get_all_matches(url):
         
         return event_links
 
-    def get_match_teams_and_odds(event_url):
+    def get_match_teams(event_url):
         response = requests.get(event_url)
         if response.status_code != 200:
             print(f"Błąd pobierania strony wydarzenia: {response.status_code}")
@@ -39,26 +42,10 @@ def get_all_matches(url):
                 team1 = correct_team_name(team1)
                 team2 = correct_team_name(team2)
                 
-                odds = {}
-                odds_section = soup.find_all("td", class_="col-odds")
-                if len(odds_section) >= 3:
-                    odd1 = odds_section[0].find("span", class_="odds-value")
-                    if odd1:
-                        odds["course1"] = format(float(odd1.text.strip().replace(",", ".")), ".2f")
-                    
-                    oddX = odds_section[1].find("span", class_="odds-value")
-                    if oddX:
-                        odds["courseX"] = format(float(oddX.text.strip().replace(",", ".")), ".2f")
-                    
-                    odd2 = odds_section[2].find("span", class_="odds-value")
-                    if odd2:
-                        odds["course2"] = format(float(odd2.text.strip().replace(",", ".")), ".2f")
-                
                 return {
                     "identifier": f"{team1}:{team2}",
                     "team1": team1,
-                    "team2": team2,
-                    **odds
+                    "team2": team2
                 }
         
         return None
@@ -67,14 +54,8 @@ def get_all_matches(url):
     matches = []
     
     for event_url in event_links:
-        match_data = get_match_teams_and_odds(event_url)
+        match_data = get_match_teams(event_url)
         if match_data:
             matches.append(match_data)
     
-    return matches
-
-# url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"
-# all_matches = get_all_matches(url)
-
-# for match in all_matches:
-#     print(match)
+    return JsonResponse(matches, safe=False)
