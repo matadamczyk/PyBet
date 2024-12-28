@@ -1,7 +1,7 @@
 <template>
   <div class="sports-container">
-    <!-- <SportsCard /> -->
-    <!-- <BetsCard /> -->
+    <SportsCard />
+    <BetsCard />
     <CouponCard />
   </div>
 </template>
@@ -16,7 +16,7 @@ import CouponCard from './main-cards/CouponCard.vue';
 .sports-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 12%;
   width: 100%;
   height: 40rem;

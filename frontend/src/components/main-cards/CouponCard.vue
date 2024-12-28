@@ -37,6 +37,7 @@ const rate = ref<number>(50.0);
 
 <style scoped>
 .coupon-container {
+  margin-right: 3rem;
   background-color: var(--color-grey-150);
   border-radius: 15px;
   border: 1px solid var(--color-grey-550);
@@ -87,7 +88,6 @@ h4 {
   justify-content: center;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  box-shadow: 0 2px 10px var(--color-grey-550);
 }
 .info-row {
   display: flex;
