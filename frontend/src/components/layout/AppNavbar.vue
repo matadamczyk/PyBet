@@ -1,13 +1,9 @@
 <template>
   <nav>
-    <div class="flex space-x-8 ml-5">
-      <ToggleMenu />
+    <div class="h-full object-contain flex space-x-8 ml-5 items-center">
+      <img src="@/assets/logo.png" alt="logo" class="h-full object-contain mr-8" />
       <a class="normal" href="">Bets</a>
       <a class="normal" href="">Live<i class="fa fa-signal-stream"></i></a>
-    </div>
-    <div class="h-full object-contain flex space-x-8 ml-5 items-center">
-      <img src="@/assets/logo.png" alt="logo" class="h-full object-contain" />
-      <span class="logo-label">PyBet</span>
     </div>
     <div class="flex space-x-8 mr-5 items-center">
       <button class="register" @click="showRegisterDialog"><span>Sign up</span></button>
@@ -28,7 +24,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import ToggleMenu from '../ToggleMenu.vue'
 import SignIn from '../account/SignIn.vue'
 import RegisterAccount from '../account/RegisterAccount.vue'
 
@@ -53,7 +48,7 @@ nav {
 <style scoped>
 nav {
   width: 100%;
-  height: 15%;
+  height: 10%;
   background-color: var(--color-grey-550);
   color: var(--color-primary-gray-light);
   position: fixed;
@@ -76,7 +71,7 @@ body {
 }
 
 img {
-  height: 100%;
+  height: 70%;
   object-fit: contain;
 }
 
