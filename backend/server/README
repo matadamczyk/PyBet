@@ -1,0 +1,13 @@
+starting server:
+python manage.py runserver
+or
+python3 manage.py runserver
+
+/login/ route allows to add login data to database
+
+/stats/ is post request, you need to pass link to the website from which you want to scrape data
+{
+    "input":"https://www.betclic.pl/pilka-nozna-sfootball/premier-league-c3"
+}
+
+/users/ route shows data of every user in database

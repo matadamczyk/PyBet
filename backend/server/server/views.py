@@ -1,15 +1,40 @@
+from sqlite3 import IntegrityError
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_exempt  # Use only if testing without CSRF protection
 from . import betclic
 import json
-
+from .models import Login
 
 # Create your views here.
 def home(request):
-    return HttpResponse("hello")
+    return HttpResponse("home.html")
 
-@csrf_exempt  # Remove in production, ensure proper CSRF handling
+def login_view(request):
+    return render(request, "login.html")
+
+def users(request):
+    users = Login.objects.all()
+    return render(request, "users.html", {"users":users})
+
+@csrf_exempt
+def login_post(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        if not email or not password:
+            return HttpResponseBadRequest("Email and password are required.")
+        
+        try:
+            Login.objects.create(email=email, password=password)
+            return redirect("users")  # Redirect to the users page
+        except IntegrityError:
+            return HttpResponseBadRequest("This email is already registered.")
+    else:
+        return HttpResponseBadRequest("Only POST requests are allowed.")
+
+@csrf_exempt
 def stats(request):
     if request.method != "POST":
         return HttpResponseBadRequest("Only POST requests are allowed.")
