@@ -56,3 +56,43 @@ def stats(request):
     
     except json.JSONDecodeError:
         return HttpResponseBadRequest("Invalid JSON payload.")
+    
+
+@csrf_exempt
+def register_account(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            email = data.get('email')
+            password = data.get('password')
+
+            if not email or not password:
+                return HttpResponseBadRequest("Email and password are required.")
+
+            hashed_password = make_password(password)
+            UserAccount.objects.create(email=email, password=hashed_password)
+            return JsonResponse({"message": "User registered successfully."})
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest("Invalid JSON payload.")
+    return HttpResponseBadRequest("Only POST requests are allowed.")
+
+
+@csrf_exempt
+def sign_in(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            email = data.get('email')
+            password = data.get('password')
+
+            if not email or not password:
+                return HttpResponseBadRequest("Email and password are required.")
+
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                return JsonResponse({"message": "Sign in successful."})
+            else:
+                return HttpResponseBadRequest("Invalid email or password.")
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest("Invalid JSON payload.")
+    return HttpResponseBadRequest("Only POST requests are allowed.")
