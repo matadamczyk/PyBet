@@ -37,6 +37,8 @@ const rate = ref<number>(50.0);
 
 <style scoped>
 .coupon-container {
+  position: fixed;
+  right: 0;
   margin-right: 3rem;
   background-color: var(--color-grey-150);
   border-radius: 15px;

@@ -65,12 +65,13 @@ const filteredSports = computed(() => {
 const router = useRouter()
 
 const handleClick = (sport: { id: number; name: string; icon: string }) => {
-  router.push({ name: 'Discipline', params: { disciplineId: sport.id } })
+  router.push({ name: 'Sports', params: { sport: sport.name.toLowerCase() } })
 }
 </script>
 
 <style scoped>
 .sports-card {
+  position: fixed;
   margin-left: 3rem;
   width: 15%;
   background-color: var(--color-grey-100);

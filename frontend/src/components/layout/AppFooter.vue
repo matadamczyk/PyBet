@@ -23,6 +23,8 @@
 <style scoped>
 footer {
   margin-top: 5rem;
+  margin-right: 5rem;
+  margin-bottom: 3rem;
   background-color: var(--color-green-500);
   width: 915px;
   height: 12rem;

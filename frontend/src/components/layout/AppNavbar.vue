@@ -3,7 +3,7 @@
     <div class="h-full object-contain flex space-x-8 ml-5 items-center">
       <img src="@/assets/logo.png" alt="logo" class="h-full object-contain mr-8" />
       <RouterLink class="normal" to="/">Home</RouterLink>
-      <RouterLink class="normal" to="/discipline">Bets</RouterLink>
+      <RouterLink class="normal" to="/sports">Bets</RouterLink>
       <a class="normal" href="">Live<i class="fa fa-signal-stream"></i></a>
     </div>
     <div class="flex space-x-8 mr-5 items-center">
@@ -94,7 +94,7 @@ a {
 
 .normal::before {
   content: '';
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 4px;
   border-radius: 4px;

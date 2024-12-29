@@ -1,13 +1,17 @@
 <template>
-  <div>
+  <div class="app-card">
     <AppNavbar />
+    <AppRouteWatcher />
     <MainCard />
+    <AppFooter />
   </div>
 </template>
 
 <script lang="ts" setup>
 import AppNavbar from './components/layout/AppNavbar.vue'
 import MainCard from './components/MainCard.vue'
+import AppFooter from './components/layout/AppFooter.vue';
+import AppRouteWatcher from './components/layout/AppRouteWatcher.vue';
 </script>
 
 <style>
@@ -48,7 +52,11 @@ body {
   background-color: var(--color-primary-gray-light);
   color: var(--color-primary-gray-dark);
 }
-
+.app-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 h1 {
   color: var(--color-primary-green);
 }

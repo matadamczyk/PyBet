@@ -7,12 +7,12 @@ const routes = [
     component: () => import('@/components/main-cards/bets-routes/HomeCard.vue'),
   },
   {
-    path: '/discipline/:disciplineId',
-    name: 'Discipline',
+    path: '/sports/:sport',
+    name: 'Sports',
     component: () => import('@/components/main-cards/bets-routes/DisciplineCard.vue'),
     children: [
       {
-        path: 'league/:leagueId',
+        path: 'league/:league',
         name: 'League',
         component: () => import('@/components/main-cards/bets-routes/LeagueCard.vue'),
       },
