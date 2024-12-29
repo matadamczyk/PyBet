@@ -9,17 +9,21 @@
     <div class="flex space-x-8 mr-5 items-center">
       <button class="register" @click="showRegisterDialog"><span>Sign up</span></button>
       <button class="normal" @click="showSignInDialog">Sign in</button>
+      <button class="normal" v-if="store.isLogged" @click="store.logout">Logout</button>
     </div>
     <SignIn
+      v-if="!store.isLogged"
       :visible="signInVisible"
       @update:visible="signInVisible = $event"
       @close="signInVisible = false"
     />
     <RegisterAccount
+      v-if="!store.isLogged"
       :visible="registerVisible"
       @update:visible="registerVisible = $event"
       @close="registerVisible = false"
     />
+    <div v-else></div>
   </nav>
 </template>
 
@@ -27,6 +31,9 @@
 import { ref } from 'vue'
 import SignIn from '../account/SignIn.vue'
 import RegisterAccount from '../account/RegisterAccount.vue'
+import { usePybetStore } from '@/stores/store'
+
+const store = usePybetStore();
 
 const signInVisible = ref(false)
 const registerVisible = ref(false)
@@ -94,7 +101,7 @@ a {
 
 .normal::before {
   content: '';
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 4px;
   border-radius: 4px;
