@@ -1,40 +1,74 @@
 <template>
   <div class="bets-card">
-    <div class="title">
-      <p>Type of competition</p>
-      <div class="line"></div>
+    <div v-if="route.path === '/sports'" class="hint-card">
+      <h1>To start betting choose one of the sports in the table</h1>
+      <div class="pointer">
+        <i class="pi pi-angle-left first" :class="iconColor1"></i>
+        <i class="pi pi-angle-left second" :class="iconColor2"></i>
+        <i class="pi pi-angle-left third" :class="iconColor3"></i>
+      </div>
     </div>
+    <router-view v-else />
+    <!-- <AppFooter /> -->
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+import AppFooter from '../layout/AppFooter.vue'
+
+const route = useRoute()
+
+const iconColor1 = ref<string>('color1')
+const iconColor2 = ref<string>('color2')
+const iconColor3 = ref<string>('color1')
+
+onMounted(() => {
+  const interval = setInterval(() => {
+    iconColor1.value = iconColor1.value === 'color1' ? 'color2' : 'color1'
+    iconColor2.value = iconColor2.value === 'color2' ? 'color1' : 'color2'
+    iconColor3.value = iconColor3.value === 'color1' ? 'color2' : 'color1'
+  }, 1000)
+
+  onUnmounted(() => {
+    clearInterval(interval)
+  })
+})
+</script>
 
 <style scoped>
 .bets-card {
-  width: 70%;
-  margin-right: 5rem;
-  background-color: var(--color-grey-450);
-  margin: 0 5rem 0 5rem;
-  border-radius: 30px;
-  box-shadow: 0 2px 10px var(--color-grey-450);
-}
-.title {
-  text-align: center;
-}
-.line {
   width: 100%;
-  height: 1px;
-  background: rgb(153, 153, 153);
-  background: linear-gradient(
-    45deg,
-    var(--color-grey-450) 0%,
-    var(--color-primary-gray-light) 50%,
-    var(--color-grey-450) 100%
-  );
+  margin-right: 5rem;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
 }
-p {
-  font-size: 2rem;
-  color: var(--color-primary-gray-light);
-  margin: 1rem;
+.hint-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+h1 {
+  font-weight: 700;
+  font-size: 3rem;
+  color: var(--color-grey-500);
+  margin: 2rem;
+}
+i {
+  margin: 2rem -20px;
+  font-size: 7rem;
+}
+.color1 {
+  color: var(--color-primary-green);
+}
+.color2 {
+  color: var(--color-primary-red);
 }
 </style>

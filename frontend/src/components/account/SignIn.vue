@@ -6,7 +6,7 @@
     class="custom-dialog"
     @hide="closeDialog"
   >
-    <div class="custom-bg p-6 shadow rounded-border w-full mx-auto">
+    <div class="custom-bg px-6 py-6 md:px-8 lg:px-10">
       <div class="text-center mb-8">
         <img class="w-20 h-auto mx-auto" src="@/assets/logo.png" alt="logo" />
 
@@ -17,12 +17,12 @@
 
       <div>
         <label for="email1" class="custom-label font-medium mb-2 block">Email</label>
-        <InputText id="email1" type="text" placeholder="Email address" class="w-full mb-4" />
+        <InputText id="email1" v-model="email" type="text" placeholder="Email address" class="w-full mb-4" />
 
         <label for="password1" class="custom-label font-medium mb-2 block">Password</label>
-        <InputText id="password1" type="password" placeholder="Password" class="w-full mb-4" />
+        <InputText id="password1" v-model="password" type="password" placeholder="Password" class="w-full mb-4" />
 
-        <div class="flex items-center justify-between mb-12">
+        <div class="flex items-center justify-between mb-8">
           <div class="flex items-center">
             <Checkbox id="rememberme1" v-model="checked1" :binary="true" class="mr-2" />
             <label for="rememberme1">Remember me</label>
@@ -32,7 +32,7 @@
           >
         </div>
 
-        <Button label="Sign In" icon="pi pi-user" class="w-full" />
+        <Button label="Sign In" icon="pi pi-user" class="w-full" @click="signIn" />
       </div>
     </div>
   </Dialog>
@@ -44,16 +44,49 @@ import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Checkbox from 'primevue/checkbox'
 import Button from 'primevue/button'
+import { usePybetStore } from '@/stores/store'
 
 const props = defineProps({
   visible: Boolean,
 })
+
+const store = usePybetStore();
 
 console.log(props)
 
 const emits = defineEmits(['close', 'update:visible'])
 
 const checked1 = ref(true)
+const email = ref('')
+const password = ref('')
+
+async function signIn() {
+  try {
+    const response = await fetch('http://localhost:8000/signin/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to sign in')
+    }
+
+    store.isLogged = true;
+    alert('Sign in successful')
+  } catch (error) {
+    if (error instanceof Error) {
+      alert(error.message)
+    } else {
+      alert('An unknown error occurred')
+    }
+  }
+}
 
 function closeDialog() {
   emits('close')
@@ -67,7 +100,7 @@ const updateVisible = (value: boolean) => {
 <style scoped>
 .custom-dialog {
   width: 83.333333%;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 @media (min-width: 768px) {
   .custom-dialog {
@@ -93,5 +126,23 @@ img {
 }
 .custom-label {
   color: var(--color-primary-gray-light);
+}
+input {
+  background-color: var(--color-primary-gray-light);
+  border-radius: 15px;
+  padding: 10px;
+  width: 300px;
+}
+::placeholder {
+  opacity: 0.5;
+}
+.p-button.p-component {
+  font-weight: 500;
+  background-color: var(--color-primary-green);
+  border-radius: 15px;
+  padding: 10px;
+}
+.p-button.p-component:hover {
+  background-color: var(--color-green-150);
 }
 </style>

@@ -2,19 +2,22 @@
   <div class="sports-container">
     <SportsCard />
     <BetsCard />
+    <CouponCard />
   </div>
 </template>
 
 <script setup lang="ts">
 import SportsCard from './main-cards/SportsCard.vue'
 import BetsCard from './main-cards/BetsCard.vue'
+import CouponCard from './main-cards/CouponCard.vue';
 </script>
 
 <style scoped>
 .sports-container {
   display: flex;
   flex-direction: row;
-  margin-top: 12%;
+  justify-content: space-between;
+  margin-top: 10%;
   width: 100%;
   height: 40rem;
 }
