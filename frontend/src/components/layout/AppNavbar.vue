@@ -2,7 +2,8 @@
   <nav>
     <div class="h-full object-contain flex space-x-8 ml-5 items-center">
       <img src="@/assets/logo.png" alt="logo" class="h-full object-contain mr-8" />
-      <a class="normal" href="">Bets</a>
+      <RouterLink class="normal" to="/">Home</RouterLink>
+      <RouterLink class="normal" to="/discipline">Bets</RouterLink>
       <a class="normal" href="">Live<i class="fa fa-signal-stream"></i></a>
     </div>
     <div class="flex space-x-8 mr-5 items-center">

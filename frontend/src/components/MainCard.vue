@@ -17,7 +17,7 @@ import CouponCard from './main-cards/CouponCard.vue';
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 12%;
+  margin-top: 10%;
   width: 100%;
   height: 40rem;
 }

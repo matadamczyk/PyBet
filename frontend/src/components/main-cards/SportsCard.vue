@@ -8,7 +8,7 @@
     <div v-if="isLoaded" class="content">
       <ul>
         <li v-for="sport in filteredSports" :key="sport.id">
-          <i :class="sport.icon"></i> {{ sport.name }}
+          <button @click="handleClick(sport)"><i :class="sport.icon"></i> {{ sport.name }}</button>
         </li>
       </ul>
     </div>
@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 const isLoaded = ref<boolean>(true)
 const isSearching = ref<boolean>(false)
@@ -60,6 +61,12 @@ const filteredSports = computed(() => {
     sport.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
   )
 })
+
+const router = useRouter()
+
+const handleClick = (sport: { id: number; name: string; icon: string }) => {
+  router.push({ name: 'Discipline', params: { disciplineId: sport.id } })
+}
 </script>
 
 <style scoped>
@@ -70,6 +77,7 @@ const filteredSports = computed(() => {
   border-radius: 15px;
   box-shadow: 0 2px 10px var(--color-grey-450);
   border: 1px solid var(--color-grey-550);
+  height: 40rem;
 }
 .title {
   background-color: var(--color-grey-550);
@@ -124,5 +132,14 @@ li::after {
   background: var(--color-grey-450);
   border-radius: 20%;
 }
-
+li button {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+li button:hover {
+  color: var(--color-grey-350);
+}
 </style>

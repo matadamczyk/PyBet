@@ -1,14 +1,27 @@
 <template>
   <div class="bets-card">
-    <div class="title">
-      <p>Type of competition</p>
-      <div class="line"></div>
-    </div>
+    <router-view />
+    <AppFooter />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import AppFooter from '../layout/AppFooter.vue';
+
+const route = useRoute()
+
+</script>
 
 <style scoped>
-
+  .bets-card {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow-y: auto;
+  }
 </style>

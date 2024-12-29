@@ -9,20 +9,20 @@
     </div>
     <div class="submit">
       <div class="info-row">
-        <div class="info">
+        <button class="info">
           <p class="title">DEPOSIT</p>
           <i class="pi pi-wallet"></i>
-        </div>
-        <div class="info">
+        </button>
+        <button class="info">
           <p class="title">ODDS</p>
           <p class="value">{{ odds.toFixed(2) }}</p>
-        </div>
-        <div class="info">
+        </button>
+        <button class="info">
           <p class="title">RATE</p>
           <p class="value">{{ rate.toFixed(2) }}</p>
-        </div>
+        </button>
       </div>
-      <Button>PLACE A BET</Button>
+      <Button class="submit-button">PLACE A BET</Button>
     </div>
   </div>
 </template>
@@ -43,6 +43,7 @@ const rate = ref<number>(50.0);
   border: 1px solid var(--color-grey-550);
   box-shadow: 0 2px 10px var(--color-grey-550);
   width: 20%;
+  height: 40rem;
 }
 .label {
   background-color: var(--color-grey-550);
@@ -106,7 +107,10 @@ h4 {
   height: 80px;
   border-radius: 15px;
 }
-Button {
+.info:hover {
+  background-color: var(--color-grey-200);
+}
+.submit-button {
   margin-top: 10px;
   background-color: var(--color-primary-green);
   width: 340px;
@@ -115,7 +119,7 @@ Button {
   font-size: 25px;
   font-weight: 600;
 }
-Button:hover {
+.submit-button:hover {
   background-color: var(--color-green-100);
 }
 .value {
