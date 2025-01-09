@@ -1,22 +1,52 @@
+import logging
+from sqlite3 import IntegrityError
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt  # Use only if testing without CSRF protection
 from . import betclic
 import json
-from .forms import UserAccountForm
-from django.contrib.auth.hashers import make_password
 from .models import UserAccount
-from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
+
+User = get_user_model()
 
 
 # Create your views here.
 def home(request):
     return HttpResponse("hello")
 
-@csrf_exempt  # Remove in production, ensure proper CSRF handling
+def login_view(request):
+    return render(request, "login.html")
+
+def users(request):
+    users = UserAccount.objects.all()
+    return render(request, "users.html", {"users":users})
+
+@csrf_exempt
+def register_post(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        if not email or not password:
+            return JsonResponse({"message": "Email and password are required."}, status=400)
+        
+        try:
+            hashed_password = make_password(password)
+            UserAccount.objects.create(email=email, password=hashed_password)
+            return redirect("users")  # Redirect to the users page
+        except IntegrityError:
+            return JsonResponse({"message": "This email is already registered."}, status=400)
+    else:
+        return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
+
+@csrf_exempt
 def stats(request):
     if request.method != "POST":
-        return HttpResponseBadRequest("Only POST requests are allowed.")
+        return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
     
     try:
         # Decode the JSON body
@@ -25,7 +55,7 @@ def stats(request):
         input_string = body.get("input")
 
         if not input_string:
-            return HttpResponseBadRequest("Missing 'input' key in request body.")
+            return JsonResponse({"message": "Missing 'input' key in request body."}, status=400)
         
         # Use the string as needed (pass it to betclic.main or other logic)
         data = betclic.main(input_string)
@@ -34,7 +64,7 @@ def stats(request):
         return JsonResponse({"result": data})
     
     except json.JSONDecodeError:
-        return HttpResponseBadRequest("Invalid JSON payload.")
+        return JsonResponse({"message": "Invalid JSON payload."}, status=400)
     
 
 @csrf_exempt
@@ -46,14 +76,14 @@ def register_account(request):
             password = data.get('password')
 
             if not email or not password:
-                return HttpResponseBadRequest("Email and password are required.")
+                return JsonResponse({"message": "Email and password are required."}, status=400)
 
             hashed_password = make_password(password)
             UserAccount.objects.create(email=email, password=hashed_password)
             return JsonResponse({"message": "User registered successfully."})
         except json.JSONDecodeError:
-            return HttpResponseBadRequest("Invalid JSON payload.")
-    return HttpResponseBadRequest("Only POST requests are allowed.")
+            return JsonResponse({"message": "Invalid JSON payload."}, status=400)
+    return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
 
 
 @csrf_exempt
@@ -64,14 +94,30 @@ def sign_in(request):
             email = data.get('email')
             password = data.get('password')
 
-            if not email or not password:
-                return HttpResponseBadRequest("Email and password are required.")
+            logging.info(f"Received sign-in request for email: {email}")
 
-            user = authenticate(username=email, password=password)
-            if user is not None:
-                return JsonResponse({"message": "Sign in successful."})
+            if not email or not password:
+                return JsonResponse({"message": "Email and password are required."}, status=400)
+
+            user = UserAccount.objects.filter(email=email).first()
+            if user:
+                logging.info(f"User found: {user.email}")
+                if check_password(password, user.password):
+                    logging.info(f"Password hash matches for user: {user.email}")
+                    # Directly log in the user without re-authenticating
+                    login(request, user)
+                    logging.info(f"User {email} authenticated successfully.")
+                    return JsonResponse({"message": "Sign in successful."})
+                else:
+                    logging.warning(f"Password hash does not match for user: {user.email}")
+                    return JsonResponse({"message": "Invalid email or password."}, status=400)
             else:
-                return HttpResponseBadRequest("Invalid email or password.")
-        except json.JSONDecodeError:
-            return HttpResponseBadRequest("Invalid JSON payload.")
-    return HttpResponseBadRequest("Only POST requests are allowed.")
+                logging.warning(f"No user found with email: {email}")
+                return JsonResponse({"message": "Invalid email or password."}, status=400)
+        except json.JSONDecodeError as e:
+            logging.error(f"JSON decode error: {e}")
+            return JsonResponse({"message": "Invalid JSON payload."}, status=400)
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}")
+            return JsonResponse({"message": "An unexpected error occurred."}, status=500)
+    return JsonResponse({"message": "Only POST requests are allowed."}, status=400)

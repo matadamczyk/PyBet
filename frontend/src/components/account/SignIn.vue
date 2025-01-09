@@ -44,7 +44,7 @@ import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Checkbox from 'primevue/checkbox'
 import Button from 'primevue/button'
-import { usePybetStore } from '@/stores/store'
+import { usePybetStore } from '../../stores/store'
 
 const props = defineProps({
   visible: Boolean,
@@ -62,7 +62,7 @@ const password = ref('')
 
 async function signIn() {
   try {
-    const response = await fetch('http://localhost:8000/signin/', {
+    const response = await fetch('http://127.0.0.1:8000/sign_in/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,13 +73,20 @@ async function signIn() {
       }),
     })
 
+    const responseText = await response.text();
+    console.log('Response text:', responseText);
+
     if (!response.ok) {
-      throw new Error('Failed to sign in')
+      const errorData = JSON.parse(responseText);
+      console.error('Error data:', errorData);
+      throw new Error(errorData.message || 'Failed to sign in');
     }
 
+    const data = JSON.parse(responseText);
     store.isLogged = true;
     alert('Sign in successful')
   } catch (error) {
+    console.error('Sign in error:', error);
     if (error instanceof Error) {
       alert(error.message)
     } else {

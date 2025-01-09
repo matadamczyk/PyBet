@@ -76,7 +76,7 @@ async function register() {
   }
 
   try {
-    const response = await fetch('http://localhost:8000/register/', {
+    const response = await fetch('http://127.0.0.1:8000/register_account/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +88,8 @@ async function register() {
     })
 
     if (!response.ok) {
-      throw new Error('Failed to register')
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to register');
     }
 
     alert('Registration successful')

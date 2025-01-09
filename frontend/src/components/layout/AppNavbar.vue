@@ -7,9 +7,9 @@
       <a class="normal" href="">Live<i class="fa fa-signal-stream"></i></a>
     </div>
     <div class="flex space-x-8 mr-5 items-center">
-      <button class="register" @click="showRegisterDialog"><span>Sign up</span></button>
-      <button class="normal" @click="showSignInDialog">Sign in</button>
-      <button class="normal" v-if="store.isLogged" @click="store.logout">Logout</button>
+      <button class="register" v-if="!store.isLogged" @click="showRegisterDialog"><span>Sign up</span></button>
+      <button class="normal" v-if="!store.isLogged" @click="showSignInDialog">Sign in</button>
+      <button class="register logout" v-if="store.isLogged" @click="store.logout">Logout</button>
     </div>
     <SignIn
       v-if="!store.isLogged"
@@ -31,7 +31,7 @@
 import { ref } from 'vue'
 import SignIn from '../account/SignIn.vue'
 import RegisterAccount from '../account/RegisterAccount.vue'
-import { usePybetStore } from '@/stores/store'
+import { usePybetStore } from '../../stores/store'
 
 const store = usePybetStore();
 
@@ -138,7 +138,6 @@ a {
     0.4s,
     background-position 0s;
 }
-
 .register:hover {
   --p: 100%;
 }
@@ -146,6 +145,10 @@ a {
 .register span {
   position: relative;
   z-index: 1;
+}
+.logout {
+  
+  
 }
 .logo-label {
   font-style: italic;

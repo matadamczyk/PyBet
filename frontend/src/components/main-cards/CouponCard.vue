@@ -10,8 +10,8 @@
     <div v-else class="coupon">
       <ul>
         <li v-for="bet in store.betEvents" :key="bet.date">
-          {{ bet.homeTeam }} vs {{ bet.awayTeam }} - {{ bet.date }} <br> Selected:
-          {{ bet.selectedOption }} - Odds: {{ bet.selectedOdds }}
+          {{ bet.homeTeam }} vs {{ bet.awayTeam }} - {{ bet.date }} <br />
+          Selected: {{ bet.selectedOption }} - Odds: {{ bet.selectedOdds }}
           <i class="pi pi-times" @click="removeEvent(bet)"></i>
         </li>
       </ul>
@@ -24,7 +24,7 @@
         </button>
         <button class="info">
           <p class="title">ODDS</p>
-          <p class="value">{{ odds.toFixed(2) }}</p>
+          <p class="value">{{ store.betEvents.length !== 0 ? odds.toFixed(2) : defaultOdd.toFixed(2) }}</p>
         </button>
         <button class="info" @click="handleRate">
           <p class="title">RATE</p>
@@ -47,13 +47,15 @@ import { ref, computed } from 'vue'
 import { usePybetStore } from '@/stores/store'
 
 const isEmpty = ref<boolean>(true)
+const defaultOdd = ref<number>(0.0)
+
 const odds = computed(() => {
   return store.betEvents.reduce((total, bet) => total * bet.selectedOdds, 1)
 })
 const rate = ref<number>(50.0)
 
 const totalPrize = computed(() => {
-  return odds.value * rate.value;
+  return odds.value * rate.value
 })
 
 const store = usePybetStore()
@@ -63,7 +65,6 @@ const handleDeposit = () => {
     alert('Please log in to view deposit.')
     return
   }
-  // Handle deposit logic
 }
 
 const handleRate = () => {
@@ -71,7 +72,6 @@ const handleRate = () => {
     alert('Please log in to change rate.')
     return
   }
-  // Handle rate logic
 }
 
 const placeBet = () => {
@@ -79,7 +79,6 @@ const placeBet = () => {
     alert('Please log in to place a bet.')
     return
   }
-  // Handle place bet logic
 }
 
 const removeEvent = (bet: any) => {
