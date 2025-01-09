@@ -13,7 +13,6 @@ from django.contrib.auth.hashers import check_password
 
 User = get_user_model()
 
-
 # Create your views here.
 def home(request):
     return HttpResponse("hello")
