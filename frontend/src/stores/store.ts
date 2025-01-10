@@ -113,5 +113,7 @@ export const usePybetStore = defineStore('pybet', () => {
 
   const betEvents = ref<any[]>([])
 
+  const tokens = ref<number>(0.0);
+
   return { isLogged, logout, events, betEvents }
 })

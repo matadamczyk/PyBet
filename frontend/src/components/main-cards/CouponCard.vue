@@ -78,6 +78,12 @@ const placeBet = () => {
   if (!store.isLogged) {
     alert('Please log in to place a bet.')
     return
+  } else if (store.betEvents.length === 0) {
+    alert('Choose sport events to place a bet.')
+    return
+  } else {
+    alert('Bet successfully placed!')
+    return
   }
 }
 

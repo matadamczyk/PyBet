@@ -1,14 +1,14 @@
 <template>
   <div class="sports-card">
     <div class="title">
-      <p>Sports</p>
+      <p>Leagues</p>
       <Button><i class="pi pi-search" @click="toggleSearch"></i></Button>
     </div>
     <input v-if="isSearching" type="text" v-model="searchQuery" placeholder="Search sports..." />
     <div v-if="isLoaded" class="content">
       <ul>
         <li v-for="sport in filteredSports" :key="sport.id">
-          <button @click="handleClick(sport)"><i :class="sport.icon"></i> {{ sport.name }}</button>
+          <button @click="handleClick(sport)"><i></i> {{ sport.name }}</button>
         </li>
       </ul>
     </div>
@@ -25,28 +25,23 @@ const isSearching = ref<boolean>(false)
 const sports = ref([
   {
     id: 1,
-    name: 'Football',
-    icon: 'fa-solid fa-soccer-ball',
+    name: 'Premier League',
   },
   {
     id: 2,
-    name: 'Basketball',
-    icon: 'fa-solid fa-basketball-ball',
+    name: 'La Liga',
   },
   {
     id: 3,
-    name: 'Volleyball',
-    icon: 'fa-solid fa-volleyball-ball',
+    name: 'Bundesliga',
   },
   {
     id: 4,
-    name: 'Tennis',
-    icon: 'fa-solid fa-table-tennis',
+    name: 'Serie A',
   },
   {
     id: 5,
-    name: 'Racing',
-    icon: 'fa-solid fa-flag-checkered',
+    name: 'Ligue 1',
   },
 ])
 
@@ -64,7 +59,7 @@ const filteredSports = computed(() => {
 
 const router = useRouter()
 
-const handleClick = (sport: { id: number; name: string; icon: string }) => {
+const handleClick = (sport: { id: number; name: string }) => {
   router.push({ name: 'Sports', params: { sport: sport.name.toLowerCase() } })
 }
 </script>
