@@ -4,7 +4,6 @@
       <img src="@/assets/logo.png" alt="logo" class="h-full object-contain mr-8" />
       <RouterLink class="normal" to="/">Home</RouterLink>
       <RouterLink class="normal" to="/sports">Bets</RouterLink>
-      <a class="normal" href="">Live<i class="fa fa-signal-stream"></i></a>
     </div>
     <div class="flex space-x-8 mr-5 items-center">
       <button class="register" v-show="!store.isLogged" @click="showRegisterDialog">

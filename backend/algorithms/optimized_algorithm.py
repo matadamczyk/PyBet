@@ -72,5 +72,5 @@ def predict_match_outcome(home_team, away_team):
     print(f"{match_id} {home_win_prob:.2f} {draw_prob:.2f} {away_win_prob:.2f}")
 
 if __name__ == "__main__":
-    train_and_save_model()
+    train_and_save_model() # zakomentowac po wywolaniu
     predict_match_outcome('Liverpool', 'Fulham')
