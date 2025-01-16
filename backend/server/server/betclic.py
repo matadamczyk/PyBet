@@ -2,9 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import time
-from flask import Flask, jsonify
+# from flask import Flask, jsonify
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 def fetch_matches_overview(base_url):
     response = requests.get(base_url)
@@ -108,11 +108,12 @@ def fetch_match_details(match_url):
         "courseNBTS": kursNBTS,
     }
 
-@app.route('/api/matches', methods=['GET'])
+# @app.route('/api/matches', methods=['GET'])
 def get_matches():
     url = "https://www.betclic.pl/pilka-nozna-sfootball/premier-league-c3"
     matches = fetch_matches_overview(url)
-    return jsonify(matches)
+    return matches
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    print(get_matches())

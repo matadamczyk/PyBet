@@ -120,3 +120,7 @@ def sign_in(request):
             logging.error(f"Unexpected error: {e}")
             return JsonResponse({"message": "An unexpected error occurred."}, status=500)
     return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
+
+
+def matches(request):
+    return betclic.get_matches()
