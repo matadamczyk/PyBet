@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from backend.datacollection.bookmakers.fortuna import get_all_matches
+
 def mock_response(content, status_code=200):
     mock_resp = MagicMock()
     mock_resp.status_code = status_code
@@ -52,27 +53,3 @@ class TestFortuna(unittest.TestCase):
 
         matches = get_all_matches("link3")
         self.assertEqual(len(matches), 0)
-
-# funkcje wewnetrzne
-
-    # def test_correct_team_name(self):
-    #     self.assertEqual(correct_team_name("Man.City"), "Manchester City")
-    #     self.assertEqual(correct_team_name("Man.United"), "Manchester United")
-    #     self.assertEqual(correct_team_name("Chelsea"), "Chelsea")
-    #     self.assertEqual(correct_team_name("Liverpool"), "Liverpool")
-
-    # @patch("backend.datacollection.bookmakers.fortuna.requests.get")
-    # def test_get_match_links(self, mock_get):
-    #     mock_html = """
-    #     <html>
-    #     <body>
-    #         <a class="event-link js-event-link" href="/1"></a>
-    #         <a class="event-link js-event-link" href="/2"></a>
-    #     </body>
-    #     </html>
-    #     """
-    #     mock_get.return_value = mock_response(mock_html)
-    #     links = get_match_links("link1")
-    #     self.assertEqual(len(links), 2)
-    #     self.assertEqual(links[0], "link1/1")
-    #     self.assertEqual(links[1], "link1/2")

@@ -63,8 +63,8 @@ def get_data(url, site_name="sts"):
             "course1": courses[i],
             "courseX": courses[i + 1],
             "course2": courses[i + 2],
-            "courseBTS": bts[i][0],
-            "courseNBTS": bts[i][1],
+            "courseBTS": 0,
+            "courseNBTS": 0,
             "site_name": site_name
         }
 

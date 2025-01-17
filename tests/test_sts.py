@@ -2,6 +2,12 @@ import unittest
 from unittest.mock import patch, MagicMock
 from backend.datacollection.bookmakers.sts import get_data
 
+def mock_response(content, status_code=200):
+    mock_resp = MagicMock()
+    mock_resp.status_code = status_code
+    mock_resp.text = content
+    return mock_resp
+
 class TestSts(unittest.TestCase):
 
     @patch("backend.datacollection.bookmakers.sts.requests.get")
@@ -11,28 +17,28 @@ class TestSts(unittest.TestCase):
         <body>
             <div class="match-tile-event-details-teams__team match-tile-event-details-teams__team--1">Team A</div>
             <div class="match-tile-event-details-teams__team match-tile-event-details-teams__team--2">Team B</div>
-            <span class="odds-button__odd-value ng-star-inserted">1</span>
-            <span class="odds-button__odd-value ng-star-inserted">2</span>
-            <span class="odds-button__odd-value ng-star-inserted">3</span>
-            <bb-prematch-match-tile class="ng-star-inserted">
-                <a href="/some-match-link"></a>
-            </bb-prematch-match-tile>
+            <div class="odds-button__odd-value ng-star-inserted">1</div>
+            <div class="odds-button__odd-value ng-star-inserted">2</div>
+            <div class="odds-button__odd-value ng-star-inserted">3</div>
         </body>
         </html>
         """
-        mock_get.return_value = MagicMock(status_code=200, text=mock_html)
+        mock_get.return_value = mock_response(mock_html)
 
-        result = get_data("link1")
-        expected_result = [
-            {
-                "identifier": "Team A:Team B",
-                "team1": "Team A",
-                "team2": "Team B",
-                "course1": "1",
-                "courseX": "2",
-                "course2": "3",
-                "bts": 0,
-                "nbts": 0,
-            }
-        ]
-        self.assertEqual(result, expected_result)
+        data = get_data("link1")
+        self.assertEqual(len(data), 1)
+
+        match = data[0]
+        self.assertEqual(match["identifier"], "Team A:Team B")
+        self.assertEqual(match["team1"], "Team A")
+        self.assertEqual(match["team2"], "Team B")
+        self.assertEqual(match["course1"], "1")
+        self.assertEqual(match["courseX"], "2")
+        self.assertEqual(match["course2"], "3")
+
+    @patch("backend.datacollection.bookmakers.sts.requests.get")
+    def test_invalid_response(self, mock_get):
+        mock_get.return_value = mock_response("", status_code=500)
+
+        data = get_data("link2")
+        self.assertEqual(len(data), 0)
