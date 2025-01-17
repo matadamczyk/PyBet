@@ -1,21 +1,12 @@
 from datacollection.bookmakers.betclic import fetch_matches_overview
 from datacollection.bookmakers.sts import get_data
 from datacollection.bookmakers.fortuna import get_all_matches
-from datacollection.bookmakers.write_odds_to_CSV import save_odds_to_csv
-from utils.find_profitable_odds import load_odds_from_csv
+from utils.find_profitable_odds import load_odds_from_data
 from utils.find_profitable_odds import save_to_json
 from utils.find_profitable_odds import find_profitable_events
-
+from datacollection.bookmakers.normalize import normalize_team_name, normalize_identifier
 
 from algorithms.optimized_algorithm import predict_match_outcome
-
-def save_chances_to_csv(data, filename):
-    import csv
-    with open(filename, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        for match in data:
-            writer.writerow(match)
-
 
 def main_func():
     bookmakers = [
@@ -24,21 +15,20 @@ def main_func():
         ("fortuna", "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia", get_all_matches),
     ]
 
+    all_data = []
     for site_name, url, func in bookmakers:
-        data = func(url)
-        save_odds_to_csv(data, site_name)
-
-    chances_data = []
-    odds_data = load_odds_from_csv("backend/data/odds/odds.csv")
+        data = func(url, site_name)
+        all_data.extend(data)
+    odds_data = load_odds_from_data(all_data)
+    chances_data = {}
     for match in odds_data:
-        t1=match['t1']
-        t2=match['t2']
-        chance_data = predict_match_outcome(t1,t2)
-        chances_data.append(chance_data)
-    save_chances_to_csv(chances_data, 'backend/data/API/chances.csv')
-    profitable = find_profitable_events(odds_data, 'backend/data/API/chances.csv')
+        t1 = normalize_team_name(match['t1'])
+        t2 = normalize_team_name(match['t2'])
+        match['id'] = normalize_identifier(match['id'])
+        chance_data = predict_match_outcome(t1, t2)
+        chances_data[match['id']] = chance_data
+    profitable = find_profitable_events(odds_data, chances_data)
     save_to_json(profitable, 'backend/data/profitable/profitable.json')
-
 
 if __name__ == "__main__":
     main_func()

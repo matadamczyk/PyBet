@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-def get_all_matches(url):
+def get_all_matches(url, site_name="fortuna"):
     def correct_team_name(team_name):
         if team_name.startswith("Man."):
             return "Manchester " + team_name.split(".")[1]
@@ -66,6 +65,7 @@ def get_all_matches(url):
                     "team1": team1,
                     "team2": team2,
                     **odds,
+                    "site_name": site_name
                 }
 
         return None

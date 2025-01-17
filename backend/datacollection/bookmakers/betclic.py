@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 import time
 
 
-def fetch_matches_overview(base_url):
+def fetch_matches_overview(base_url, site_name="betclic"):
     response = requests.get(base_url)
     soup = BeautifulSoup(response.text, "html.parser")
 
@@ -34,6 +34,7 @@ def fetch_matches_overview(base_url):
                 "identifier": f"{druzyna1}:{druzyna2}",
                 "team1": druzyna1,
                 "team2": druzyna2,
+                "site_name": site_name
             }
             match_data.update(details)
             matches.append(match_data)
