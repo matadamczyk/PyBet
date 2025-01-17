@@ -27,7 +27,7 @@ def normalize_identifier(identifier):
     if "manchester" in identifier.lower():
         return identifier.replace("Manchester","Man")
     if "wolverhampton" in identifier.lower():
-        return identifier.replace("wolverhampton","Wolves")
+        return identifier.replace("Wolverhampton","Wolves")
     return identifier
 
 def save_odds_to_csv(data, site_name, csv_file="backend/data/odds/odds.csv"):

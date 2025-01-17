@@ -82,23 +82,26 @@ def fetch_match_details(match_url):
         .text.replace(",", ".")
     )
 
-    market_boxes_bts = soup.find_all("div", class_="marketBox")
-    bts_section = None
-    for box in market_boxes_bts:
-        header = box.find("h2", class_="marketBox_headTitle ng-star-inserted")
-        if header and header.text.strip() == "Oba zespoły strzelą gola":
-            bts_section = box
-            break
+    # market_boxes_bts = soup.find_all("div", class_="marketBox")
+    # bts_section = None
+    # for box in market_boxes_bts:
+    #     header = box.find("h2", class_="marketBox_headTitle ng-star-inserted")
+    #     if header and header.text.strip() == "Oba zespoły strzelą gola":
+    #         bts_section = box
+    #         break
 
-    if not bts_section:
-        raise ValueError("BTS market data not found")
+    # if not bts_section:
+    #     raise ValueError("BTS market data not found")
 
-    bts_boxes = bts_section.find_all("span", class_="btn_label ng-star-inserted")
-    if len(bts_boxes) != 2:
-        raise ValueError("Incomplete BTS market data")
+    # bts_boxes = bts_section.find_all("span", class_="btn_label ng-star-inserted")
+    # if len(bts_boxes) != 2:
+    #     raise ValueError("Incomplete BTS market data")
 
-    kursBTS = float(bts_boxes[0].text.replace(",", "."))
-    kursNBTS = float(bts_boxes[1].text.replace(",", "."))
+    # kursBTS = float(bts_boxes[0].text.replace(",", "."))
+    # kursNBTS = float(bts_boxes[1].text.replace(",", "."))
+    
+    kursBTS = 0
+    kursNBTS = 0
 
     return {
         "course1": kurs1,
