@@ -3,13 +3,14 @@ from sqlite3 import IntegrityError
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt  # Use only if testing without CSRF protection
-from . import betclic
 import json
 from .models import UserAccount
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
+
+from . import fortuna
 
 User = get_user_model()
 
@@ -123,4 +124,7 @@ def sign_in(request):
 
 
 def matches(request):
-    return betclic.get_matches()
+    url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"
+    all_matches = fortuna.get_all_matches(url)
+    return JsonResponse(all_matches, safe=False)
+
