@@ -17,22 +17,23 @@
 
       <div>
         <label for="email1" class="custom-label font-medium mb-2 block">Email</label>
-        <InputText id="email1" type="text" placeholder="Email address" class="w-full mb-4" />
+        <InputText id="email1" v-model="email" type="text" placeholder="Email address" class="w-full mb-4" />
 
         <label for="password1" class="custom-label font-medium mb-2 block">Password</label>
-        <InputText id="password1" type="password" placeholder="Password" class="w-full mb-4" />
+        <InputText id="password1" v-model="password" type="password" placeholder="Password" class="w-full mb-4" />
 
         <label for="confirmPassword1" class="custom-label font-medium mb-2 block"
           >Confirm Password</label
         >
         <InputText
           id="confirmPassword1"
+          v-model="confirmPassword"
           type="password"
           placeholder="Confirm Password"
           class="w-full mb-4"
         />
 
-        <Button label="Register" icon="pi pi-user" class="w-full" />
+        <Button label="Register" icon="pi pi-user" class="w-full" @click="register" />
       </div>
     </div>
   </Dialog>
@@ -63,12 +64,49 @@ function closeDialog() {
 const updateVisible = (value: boolean) => {
   emits('update:visible', value)
 }
+
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+
+async function register() {
+  if (password.value !== confirmPassword.value) {
+    alert('Passwords do not match')
+    return
+  }
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/register_account/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to register');
+    }
+
+    alert('Registration successful')
+  } catch (error) {
+    if (error instanceof Error) {
+      alert(error.message)
+    } else {
+      alert('An unknown error occurred')
+    }
+  }
+}
 </script>
 
 <style scoped>
 .custom-dialog {
   width: 83.333333%;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 @media (min-width: 768px) {
   .custom-dialog {
@@ -94,5 +132,23 @@ img {
 }
 .custom-label {
   color: var(--color-primary-gray-light);
+}
+input {
+  background-color: var(--color-primary-gray-light);
+  border-radius: 15px;
+  padding: 10px;
+}
+::placeholder {
+  opacity: 0.5;
+}
+.p-button.p-component {
+  font-weight: 500;
+  margin-top: 20px;
+  background-color: var(--color-primary-green);
+  border-radius: 15px;
+  padding: 10px;
+}
+.p-button.p-component:hover {
+  background-color: var(--color-green-150);
 }
 </style>

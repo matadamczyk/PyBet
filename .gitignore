@@ -2,7 +2,8 @@
 **/.env
 **/__pycache__
 *.pkl
-chances.csv
-odds.csv
 profitable.json
 project_name.egg-info
+**__pycache__
+venv
+**/.vscode
