@@ -1,5 +1,9 @@
 **/node_modules
 **/.env
+**/__pycache__
+*.pkl
+profitable.json
+project_name.egg-info
 **__pycache__
 venv
 **/.vscode
