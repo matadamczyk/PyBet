@@ -12,7 +12,7 @@ import SportsCard from './main-cards/SportsCard.vue'
 import BetsCard from './main-cards/BetsCard.vue'
 import CouponCard from './main-cards/CouponCard.vue'
 
-const props = defineProps({
+defineProps({
   matches: Array,
 })
 </script>

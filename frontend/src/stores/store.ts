@@ -1,8 +1,8 @@
-import { computed, ref } from 'vue'
-
+import type { Bet } from '@/types/Bet.interface'
 import type Match from '../types/Match.interface'
 import axios from 'axios'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const usePybetStore = defineStore('pybet', () => {
   const isLogged = ref<boolean>(false)
@@ -13,7 +13,7 @@ export const usePybetStore = defineStore('pybet', () => {
 
   const matches = ref<Match[]>([])
 
-  const betEvents = ref<any[]>([])
+  const betEvents = ref<Bet[]>([])
 
   const tokens = ref<number>(0.0)
 

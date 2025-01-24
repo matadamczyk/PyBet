@@ -9,16 +9,14 @@
       </div>
     </div>
     <router-view v-else />
-    <!-- <AppFooter /> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, defineProps } from 'vue'
 import { useRoute } from 'vue-router'
-import AppFooter from '../layout/AppFooter.vue'
 
-const props = defineProps({
+defineProps({
   matches: Array,
 })
 

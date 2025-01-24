@@ -95,6 +95,7 @@ async function signIn() {
     }
 
     const data = JSON.parse(responseText)
+    console.log(data)
     store.isLogged = true
     alert('Sign in successful')
   } catch (error) {

@@ -46,9 +46,10 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { usePybetStore } from '@/stores/store'
+import { usePybetStore } from '../../stores/store'
+import type { Bet } from '../../types/Bet.interface'
 
-const isEmpty = ref<boolean>(true)
+// const isEmpty = ref<boolean>(true)
 const defaultOdd = ref<number>(0.0)
 
 const odds = computed(() => {
@@ -89,7 +90,7 @@ const placeBet = () => {
   }
 }
 
-const removeEvent = (bet: any) => {
+const removeEvent = (bet: Bet) => {
   const index = store.betEvents.indexOf(bet)
   if (index > -1) {
     store.betEvents.splice(index, 1)

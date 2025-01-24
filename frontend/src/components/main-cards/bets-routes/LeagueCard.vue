@@ -40,24 +40,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineProps, onBeforeMount } from 'vue'
-import { usePybetStore } from '@/stores/store'
-
-interface Match {
-  identifier: string
-  team1: string
-  team2: string
-  course1: string
-  courseX: string
-  course2: string
-}
-
-const props = defineProps<{ selectedLeague: string }>()
+import { ref, defineProps, onBeforeMount } from 'vue'
+import { usePybetStore } from '../../../stores/store'
+import type { Bet } from '../../../types/Bet.interface'
+defineProps<{ selectedLeague: string }>()
 const store = usePybetStore()
 
-const filteredEvents = computed(() => {
-  return store.matches.filter((event) => event.league === props.selectedLeague)
-})
+// const filteredEvents = computed(() => {
+//   return store.matches.filter((event) => event.league === props.selectedLeague)
+// })
 
 const selection = ref<{ [key: string]: string }>({})
 
@@ -69,13 +60,14 @@ const handleSelect = (date: string, team: string) => {
   }
 }
 
-const placeBet = (event: any) => {
+const placeBet = (event: Bet) => {
   const selectedOption = selection.value[event.date]
   if (selectedOption) {
     store.betEvents.push({
       ...event,
       selectedOption,
       selectedOdds:
+        event.odds &&
         event.odds[
           selectedOption === 'Draw'
             ? 'draw'
