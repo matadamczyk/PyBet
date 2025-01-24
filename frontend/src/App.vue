@@ -2,7 +2,7 @@
   <div class="app-card">
     <AppNavbar />
     <AppRouteWatcher />
-    <MainCard />
+    <MainCard :matches="matches" />
     <AppFooter />
   </div>
 </template>
@@ -10,8 +10,18 @@
 <script lang="ts" setup>
 import AppNavbar from './components/layout/AppNavbar.vue'
 import MainCard from './components/MainCard.vue'
-import AppFooter from './components/layout/AppFooter.vue';
-import AppRouteWatcher from './components/layout/AppRouteWatcher.vue';
+import AppFooter from './components/layout/AppFooter.vue'
+import AppRouteWatcher from './components/layout/AppRouteWatcher.vue'
+import { onBeforeMount, computed } from 'vue'
+import { usePybetStore } from './stores/store'
+
+const store = usePybetStore()
+
+onBeforeMount(async () => {
+  await store.fetchMatches()
+})
+
+const matches = computed(() => store.matches)
 </script>
 
 <style>

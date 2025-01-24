@@ -9,14 +9,7 @@ const routes = [
   {
     path: '/sports/:sport',
     name: 'Sports',
-    component: () => import('@/components/main-cards/bets-routes/DisciplineCard.vue'),
-    children: [
-      {
-        path: 'league/:league',
-        name: 'League',
-        component: () => import('@/components/main-cards/bets-routes/LeagueCard.vue'),
-      },
-    ],
+    component: () => import('@/components/main-cards/bets-routes/LeagueCard.vue'),
   },
 ]
 

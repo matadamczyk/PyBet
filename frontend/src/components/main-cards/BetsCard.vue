@@ -14,9 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, defineProps } from 'vue'
 import { useRoute } from 'vue-router'
 import AppFooter from '../layout/AppFooter.vue'
+
+const props = defineProps({
+  matches: Array
+})
 
 const route = useRoute()
 

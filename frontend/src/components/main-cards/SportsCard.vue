@@ -22,26 +22,11 @@ import { useRouter } from 'vue-router'
 
 const isLoaded = ref<boolean>(true)
 const isSearching = ref<boolean>(false)
+
 const sports = ref([
   {
     id: 1,
     name: 'Premier League',
-  },
-  {
-    id: 2,
-    name: 'La Liga',
-  },
-  {
-    id: 3,
-    name: 'Bundesliga',
-  },
-  {
-    id: 4,
-    name: 'Serie A',
-  },
-  {
-    id: 5,
-    name: 'Ligue 1',
   },
 ])
 
