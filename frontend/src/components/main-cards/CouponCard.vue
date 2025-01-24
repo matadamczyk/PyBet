@@ -24,7 +24,9 @@
         </button>
         <button class="info">
           <p class="title">ODDS</p>
-          <p class="value">{{ store.betEvents.length !== 0 ? odds.toFixed(2) : defaultOdd.toFixed(2) }}</p>
+          <p class="value">
+            {{ store.betEvents.length !== 0 ? odds.toFixed(2) : defaultOdd.toFixed(2) }}
+          </p>
         </button>
         <button class="info" @click="handleRate">
           <p class="title">RATE</p>

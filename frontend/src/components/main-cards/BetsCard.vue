@@ -19,7 +19,7 @@ import { useRoute } from 'vue-router'
 import AppFooter from '../layout/AppFooter.vue'
 
 const props = defineProps({
-  matches: Array
+  matches: Array,
 })
 
 const route = useRoute()

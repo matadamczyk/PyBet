@@ -148,7 +148,8 @@ a {
   position: relative;
   z-index: 1;
 }
-.logout, .account {
+.logout,
+.account {
   left: 40rem;
 }
 .logo-label {

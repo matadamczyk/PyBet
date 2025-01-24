@@ -17,10 +17,22 @@
 
       <div>
         <label for="email1" class="custom-label font-medium mb-2 block">Email</label>
-        <InputText id="email1" v-model="email" type="text" placeholder="Email address" class="w-full mb-4" />
+        <InputText
+          id="email1"
+          v-model="email"
+          type="text"
+          placeholder="Email address"
+          class="w-full mb-4"
+        />
 
         <label for="password1" class="custom-label font-medium mb-2 block">Password</label>
-        <InputText id="password1" v-model="password" type="password" placeholder="Password" class="w-full mb-4" />
+        <InputText
+          id="password1"
+          v-model="password"
+          type="password"
+          placeholder="Password"
+          class="w-full mb-4"
+        />
 
         <label for="confirmPassword1" class="custom-label font-medium mb-2 block"
           >Confirm Password</label
@@ -88,8 +100,8 @@ async function register() {
     })
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to register');
+      const errorData = await response.json()
+      throw new Error(errorData.message || 'Failed to register')
     }
 
     alert('Registration successful')

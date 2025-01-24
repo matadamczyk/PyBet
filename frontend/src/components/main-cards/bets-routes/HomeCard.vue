@@ -14,7 +14,6 @@
           Experience the thrill of sports betting with PyBet!
         </p>
       </div>
-      
     </div>
   </div>
 </template>

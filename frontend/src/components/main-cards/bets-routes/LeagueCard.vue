@@ -44,12 +44,12 @@ import { ref, computed, defineProps, onBeforeMount } from 'vue'
 import { usePybetStore } from '@/stores/store'
 
 interface Match {
-  identifier: string;
-  team1: string;
-  team2: string;
-  course1: string;
-  courseX: string;
-  course2: string;
+  identifier: string
+  team1: string
+  team2: string
+  course1: string
+  courseX: string
+  course2: string
 }
 
 const props = defineProps<{ selectedLeague: string }>()

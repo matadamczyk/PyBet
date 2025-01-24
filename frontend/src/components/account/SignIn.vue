@@ -17,10 +17,22 @@
 
       <div>
         <label for="email1" class="custom-label font-medium mb-2 block">Email</label>
-        <InputText id="email1" v-model="email" type="text" placeholder="Email address" class="w-full mb-4" />
+        <InputText
+          id="email1"
+          v-model="email"
+          type="text"
+          placeholder="Email address"
+          class="w-full mb-4"
+        />
 
         <label for="password1" class="custom-label font-medium mb-2 block">Password</label>
-        <InputText id="password1" v-model="password" type="password" placeholder="Password" class="w-full mb-4" />
+        <InputText
+          id="password1"
+          v-model="password"
+          type="password"
+          placeholder="Password"
+          class="w-full mb-4"
+        />
 
         <div class="flex items-center justify-between mb-8">
           <div class="flex items-center">
@@ -50,7 +62,7 @@ const props = defineProps({
   visible: Boolean,
 })
 
-const store = usePybetStore();
+const store = usePybetStore()
 
 console.log(props)
 
@@ -73,20 +85,20 @@ async function signIn() {
       }),
     })
 
-    const responseText = await response.text();
-    console.log('Response text:', responseText);
+    const responseText = await response.text()
+    console.log('Response text:', responseText)
 
     if (!response.ok) {
-      const errorData = JSON.parse(responseText);
-      console.error('Error data:', errorData);
-      throw new Error(errorData.message || 'Failed to sign in');
+      const errorData = JSON.parse(responseText)
+      console.error('Error data:', errorData)
+      throw new Error(errorData.message || 'Failed to sign in')
     }
 
-    const data = JSON.parse(responseText);
-    store.isLogged = true;
+    const data = JSON.parse(responseText)
+    store.isLogged = true
     alert('Sign in successful')
   } catch (error) {
-    console.error('Sign in error:', error);
+    console.error('Sign in error:', error)
     if (error instanceof Error) {
       alert(error.message)
     } else {
