@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+stages:
+  - build
+  - test
+  - e2e
+
 jobs:
   build:
     runs-on: ubuntu-latest
