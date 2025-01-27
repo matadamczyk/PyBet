@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="store.matches.length">
+    <div v-if="store.isLoading" class="loader">Loading matches...</div>
+    <div v-else-if="store.matches.length">
       <div v-for="match in store.matches" :key="match.identifier" class="event-row">
         <div class="team">{{ match.team1 }}</div>
         <p>vs</p>
         <div class="team">{{ match.team2 }}</div>
-        <div>{{ match.identifier }}</div>
         <button
           :class="{ active: selection[match.identifier] === match.team1 }"
           class="odds"
@@ -43,12 +43,9 @@
 import { ref, defineProps, onBeforeMount } from 'vue'
 import { usePybetStore } from '../../../stores/store'
 import type { Bet } from '../../../types/Bet.interface'
+
 defineProps<{ selectedLeague: string }>()
 const store = usePybetStore()
-
-// const filteredEvents = computed(() => {
-//   return store.matches.filter((event) => event.league === props.selectedLeague)
-// })
 
 const selection = ref<{ [key: string]: string }>({})
 
@@ -60,22 +57,30 @@ const handleSelect = (date: string, team: string) => {
   }
 }
 
-const placeBet = (event: Bet) => {
-  const selectedOption = selection.value[event.date]
+const placeBet = (match: {
+  identifier: string
+  team1: string
+  team2: string
+  course1: string
+  courseX: string
+  course2: string
+}) => {
+  const selectedOption = selection.value[match.identifier]
   if (selectedOption) {
-    store.betEvents.push({
-      ...event,
+    const bet: Bet = {
+      homeTeam: match.team1,
+      awayTeam: match.team2,
+      date: new Date().toISOString(),
       selectedOption,
       selectedOdds:
-        event.odds &&
-        event.odds[
-          selectedOption === 'Draw'
-            ? 'draw'
-            : selectedOption === event.homeTeam
-              ? 'homeWin'
-              : 'awayWin'
-        ],
-    })
+        (selectedOption === 'Draw'
+          ? parseFloat(match.courseX)
+          : selectedOption === match.team1
+          ? parseFloat(match.course1)
+          : parseFloat(match.course2)),
+    }
+
+    store.betEvents.push(bet)
   }
 }
 
@@ -85,6 +90,11 @@ onBeforeMount(async () => {
 </script>
 
 <style scoped>
+.loader {
+  font-size: 20px;
+  text-align: center;
+  margin: 20px;
+}
 .event-row {
   display: flex;
   flex-direction: row;
@@ -119,5 +129,9 @@ button {
 h6 {
   opacity: 0.7;
   font-size: 15px;
+}
+
+.event-row:first-child {
+  margin-top: 10%;
 }
 </style>

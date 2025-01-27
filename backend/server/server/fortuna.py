@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 
 
 def get_all_matches(url):
+    print(f"Fetching matches from: {url}") 
     def correct_team_name(team_name):
         if team_name.startswith("Man."):
             return "Manchester " + team_name.split(".")[1]

@@ -1,7 +1,7 @@
 <template>
   <div class="sports-container">
     <SportsCard />
-    <BetsCard :matches="matches" />
+    <BetsCard />
     <CouponCard />
   </div>
 </template>

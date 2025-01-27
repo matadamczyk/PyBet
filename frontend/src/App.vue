@@ -2,7 +2,7 @@
   <div class="app-card">
     <AppNavbar />
     <AppRouteWatcher />
-    <MainCard :matches="matches" />
+    <MainCard />
     <AppFooter />
   </div>
 </template>
