@@ -31,3 +31,9 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class UserPickedOption(models.Model):
+    selectedOption = models.CharField(max_length=255)
+    date = models.DateField()
+    selectedOdds = models.FloatField()
+    stake = models.FloatField()

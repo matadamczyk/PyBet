@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt  # Use only if testing without CSRF protection
 import json
-from .models import UserAccount
+from .models import UserAccount, UserPickedOption
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
@@ -121,6 +121,51 @@ def sign_in(request):
             logging.error(f"Unexpected error: {e}")
             return JsonResponse({"message": "An unexpected error occurred."}, status=500)
     return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
+
+
+# example of json to be sent
+# {
+#     "selectedOption": "Option A",
+#     "date": "2023-10-15",
+#     "selectedOdds": 2.5,
+#     "stake": 100.0
+# }
+@csrf_exempt
+def user_picked_option(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            selected_option = data.get('selectedOption')
+            date = data.get('date')
+            selected_odds = data.get('selectedOdds')
+            stake = data.get('stake')
+
+            if not selected_option or not date or not selected_odds or not stake:
+                return JsonResponse({"message": "All fields are required."}, status=400)
+
+            UserPickedOption.objects.create(
+                selectedOption=selected_option,
+                date=date,
+                selectedOdds=selected_odds,
+                stake=stake
+            )
+            return JsonResponse({"message": "User picked option saved successfully."})
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON payload."}, status=400)
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}")
+            return JsonResponse({"message": "An unexpected error occurred."}, status=500)
+    return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
+
+def get_user_picked_options(request):
+    if request.method == 'GET':
+        try:
+            options = UserPickedOption.objects.all().values()
+            return JsonResponse(list(options), safe=False)
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}")
+            return JsonResponse({"message": "An unexpected error occurred."}, status=500)
+    return JsonResponse({"message": "Only GET requests are allowed."}, status=400)
 
 
 def matches(request):
