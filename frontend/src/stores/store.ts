@@ -16,7 +16,12 @@ export const usePybetStore = defineStore('pybet', () => {
 
   const betEvents = ref<Bet[]>([])
 
-  const tokens = ref<number>(0.0)
+  const tokens = ref<string>(localStorage.getItem('tokens') || '')
+
+  const setTokens = (newTokens: string) => {
+    tokens.value = newTokens
+    localStorage.setItem('tokens', newTokens)
+  }
 
   const isLoading = ref<boolean>(false)
 
@@ -51,5 +56,23 @@ export const usePybetStore = defineStore('pybet', () => {
     }
   }
 
-  return { isLogged, logout, betEvents, tokens, fetchMatches, matches, isLoading, pycoins, updatePycoins, deductPycoins }
+  const fetchUserPycoins = async () => {
+    if (isLogged.value) {
+      try {
+        const response = await fetch('http://localhost:8000/user-pycoins/', {
+          headers: {
+            'Authorization': `Bearer ${tokens.value}`,
+          },
+        })
+        if (response.ok) {
+          const data = await response.json()
+          pycoins.value = data.pycoins
+        }
+      } catch (error) {
+        console.error('Error fetching user pycoins:', error)
+      }
+    }
+  }
+
+  return { isLogged, logout, betEvents, tokens, fetchMatches, matches, isLoading, pycoins, updatePycoins, deductPycoins, fetchUserPycoins, setTokens }
 })

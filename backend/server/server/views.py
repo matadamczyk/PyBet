@@ -101,27 +101,23 @@ def sign_in(request):
             data = json.loads(request.body)
             email = data.get('email')
             password = data.get('password')
-
-            logging.info(f"Received sign-in request for email: {email}")
-
-            if not email or not password:
-                return JsonResponse({"message": "Email and password are required."}, status=400)
-
-            user = UserAccount.objects.filter(email=email).first()
-            if user:
-                logging.info(f"User found: {user.email}")
+            
+            try:
+                user = UserAccount.objects.get(email=email)
                 if check_password(password, user.password):
-                    logging.info(f"Password hash matches for user: {user.email}")
-                    # Directly log in the user without re-authenticating
                     login(request, user)
-                    logging.info(f"User {email} authenticated successfully.")
-                    return JsonResponse({"message": "Sign in successful."})
-                else:
-                    logging.warning(f"Password hash does not match for user: {user.email}")
-                    return JsonResponse({"message": "Invalid email or password."}, status=400)
-            else:
-                logging.warning(f"No user found with email: {email}")
-                return JsonResponse({"message": "Invalid email or password."}, status=400)
+                    response = JsonResponse({
+                        "message": "Login successful",
+                        "tokens": request.session.session_key,
+                        "pycoins": user.pycoins
+                    })
+                    response["Access-Control-Allow-Origin"] = "http://localhost:5173"
+                    response["Access-Control-Allow-Credentials"] = "true"
+                    return response
+            except UserAccount.DoesNotExist:
+                pass
+                
+            return JsonResponse({"message": "Invalid credentials."}, status=401)
         except json.JSONDecodeError as e:
             logging.error(f"JSON decode error: {e}")
             return JsonResponse({"message": "Invalid JSON payload."}, status=400)
@@ -203,3 +199,73 @@ def get_profitable_odds(request):
             logging.error(f"Unexpected error: {e}")
             return JsonResponse({"message": "Error reading profitable data"}, status=500)
     return JsonResponse({"message": "Only GET requests are allowed."}, status=400)
+
+@csrf_exempt
+def add_pycoins(request):
+    if request.method != 'POST':
+        return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
+    
+    try:
+        data = json.loads(request.body)
+        amount = data.get('amount')
+        email = data.get('email')
+        
+        try:
+            user = UserAccount.objects.get(email=email)
+            user.pycoins += float(amount)
+            user.save()
+            
+            response = JsonResponse({"pycoins": user.pycoins})
+            response["Access-Control-Allow-Origin"] = "http://localhost:5173"
+            response["Access-Control-Allow-Credentials"] = "true"
+            return response
+        except UserAccount.DoesNotExist:
+            return JsonResponse({"message": "User not found."}, status=404)
+            
+    except json.JSONDecodeError:
+        return JsonResponse({"message": "Invalid JSON payload."}, status=400)
+    except Exception as e:
+        return JsonResponse({"message": str(e)}, status=500)
+
+@csrf_exempt
+def place_bet(request):
+    if request.method != 'POST':
+        return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
+    
+    try:
+        data = json.loads(request.body)
+        user = request.user
+        
+        if not user.is_authenticated:
+            return JsonResponse({"message": "User not authenticated."}, status=401)
+            
+        if user.pycoins < data['stake']:
+            return JsonResponse({"message": "Insufficient PyCoins."}, status=400)
+            
+        user.pycoins -= data['stake']
+        user.save()
+        
+        UserPickedOption.objects.create(
+            user=user,
+            selectedOption=data['selectedOption'],
+            date=data['date'],
+            selectedOdds=data['selectedOdds'],
+            stake=data['stake']
+        )
+        
+        return JsonResponse({
+            "message": "Bet placed successfully",
+            "pycoins": user.pycoins
+        })
+    except Exception as e:
+        return JsonResponse({"message": str(e)}, status=500)
+
+@csrf_exempt
+def get_user_pycoins(request):
+    if request.method != 'GET':
+        return JsonResponse({"message": "Only GET requests are allowed."}, status=400)
+        
+    if not request.user.is_authenticated:
+        return JsonResponse({"message": "User not authenticated."}, status=401)
+        
+    return JsonResponse({"pycoins": request.user.pycoins})

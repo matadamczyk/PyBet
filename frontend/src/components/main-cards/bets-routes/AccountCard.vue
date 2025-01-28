@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { usePybetStore } from '../../../stores/store'
-
+import type { BetHistory } from '../../../types/BetHistory.interface'
 const store = usePybetStore()
 const pyCoins = ref(0)
-const bettingHistory = ref([])
+const bettingHistory = ref<BetHistory[]>([])
 
 const fetchBettingHistory = async () => {
   const response = await fetch('http://localhost:8000/bets/')
@@ -39,9 +39,12 @@ const addPyCoins = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${store.tokens}`,
       },
-      body: JSON.stringify({ amount: Number(amount) }),
+      body: JSON.stringify({ 
+        amount: Number(amount),
+        email: localStorage.getItem('userEmail')
+      }),
+      credentials: 'include'
     })
 
     if (response.ok) {
@@ -54,9 +57,14 @@ const addPyCoins = async () => {
   }
 }
 
-onMounted(() => {
-  fetchBettingHistory()
-  pyCoins.value = store.tokens 
+watch(() => store.pycoins, (newValue) => {
+  pyCoins.value = newValue
+  store.pycoins = pyCoins.value
+})
+
+onMounted(async () => {
+  await fetchBettingHistory()
+  await store.fetchUserPycoins()
 })
 </script>
 

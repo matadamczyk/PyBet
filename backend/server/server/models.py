@@ -38,4 +38,4 @@ class UserPickedOption(models.Model):
     date = models.DateField()
     selectedOdds = models.FloatField()
     stake = models.FloatField()
-    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE) 
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, null=True) 

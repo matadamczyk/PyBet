@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register_account, sign_in, user_picked_option, get_user_picked_options, get_profitable_odds
+from .views import register_account, sign_in, user_picked_option, get_user_picked_options, get_profitable_odds, add_pycoins, place_bet, get_user_pycoins
 from . import views
 
 urlpatterns = [
@@ -14,4 +14,7 @@ urlpatterns = [
     path('user_picked_option/', user_picked_option, name='user_picked_option'),
     path('get_user_picked_options/', get_user_picked_options, name='get_user_picked_options'),
     path('profitable/', get_profitable_odds, name='get_profitable_odds'),
+    path('add-pycoins/', views.add_pycoins, name='add_pycoins'),
+    path('place-bet/', views.place_bet, name='place_bet'),
+    path('user-pycoins/', views.get_user_pycoins, name='get_user_pycoins'),
 ]

@@ -75,6 +75,20 @@ const handleRate = () => {
     alert('Please log in to change rate.')
     return
   }
+  
+  const newRate = prompt('Enter new rate:')
+  if (newRate && !isNaN(Number(newRate))) {
+    const newRateNum = Number(newRate)
+    if (newRateNum <= 0) {
+      alert('Rate must be greater than 0.')
+      return
+    }
+    if (newRateNum > store.pycoins) {
+      alert('Rate cannot be greater than your PyCoins balance.')
+      return
+    }
+    rate.value = newRateNum
+  }
 }
 
 const placeBet = async () => {

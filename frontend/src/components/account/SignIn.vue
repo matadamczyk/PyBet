@@ -98,7 +98,9 @@ async function signIn() {
     console.log(data)
     
     localStorage.setItem('isLogged', 'true')
-
+    store.setTokens(data.tokens)
+    store.updatePycoins(data.pycoins)
+    localStorage.setItem('userEmail', email.value);
     store.isLogged = true
     alert('Sign in successful')
   } catch (error) {
