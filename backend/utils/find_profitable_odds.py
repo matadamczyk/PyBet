@@ -1,4 +1,5 @@
 import json
+import os
 
 def load_odds_from_data(data):
     odds_data = []
@@ -63,6 +64,8 @@ def find_profitable_events(odds_data, chances_data, tax=0.88):
     return profitable
 
 def save_to_json(profitable, fout):
+    os.makedirs(os.path.dirname(fout), exist_ok=True)
+    
     with open(fout, mode='w', encoding='utf-8') as file:
         json.dump(profitable, file, ensure_ascii=False, indent=4)
 

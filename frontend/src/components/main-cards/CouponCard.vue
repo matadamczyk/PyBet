@@ -77,16 +77,42 @@ const handleRate = () => {
   }
 }
 
-const placeBet = () => {
+const placeBet = async () => {
   if (!store.isLogged) {
     alert('Please log in to place a bet.')
     return
-  } else if (store.betEvents.length === 0) {
+  } 
+  if (store.betEvents.length === 0) {
     alert('Choose sport events to place a bet.')
     return
-  } else {
-    alert('Bet successfully placed!')
+  }
+  if (!store.deductPycoins(rate.value)) {
+    alert('Insufficient PyCoins balance.')
     return
+  }
+
+  const betData = {
+    selectedOption: store.betEvents.map(bet => bet.selectedOption).join(', '),
+    date: new Date().toISOString().split('T')[0],
+    selectedOdds: odds.value,
+    stake: rate.value,
+  }
+
+  const response = await fetch('http://localhost:8000/bets/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${store.tokens}`,
+    },
+    body: JSON.stringify(betData),
+  })
+
+  if (response.ok) {
+    alert('Bet successfully placed!')
+    store.betEvents = []
+  } else {
+    alert('Failed to place bet.')
+    store.updatePycoins(store.pycoins + rate.value)
   }
 }
 

@@ -10,7 +10,15 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 
-from . import fortuna
+# from . import matches
+import sys
+import os
+
+# Add the project root directory to Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from algorithms.optimized_algorithm import predict_match_outcome
+from datacollection.bookmakers.normalize import normalize_team_name
 
 User = get_user_model()
 
@@ -170,6 +178,28 @@ def get_user_picked_options(request):
 
 def matches(request):
     url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"
-    all_matches = fortuna.get_all_matches(url)
+    from .matches import get_all_matches
+    all_matches = get_all_matches(url)
     return JsonResponse(all_matches, safe=False)
 
+
+@csrf_exempt
+def get_profitable_odds(request):
+    if request.method == 'GET':
+        try:
+            file_path = 'server/data/profitable/profitable.json'
+            full_path = os.path.abspath(file_path)
+            
+            with open(full_path, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+            return JsonResponse(data, safe=False)
+        except FileNotFoundError:
+            logging.error("File not found: %s", file_path)
+            return JsonResponse({"message": "Profitable data file not found"}, status=404)
+        except json.JSONDecodeError:
+            logging.error("Error decoding JSON from file: %s", file_path)
+            return JsonResponse({"message": "Error reading profitable data"}, status=500)
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}")
+            return JsonResponse({"message": "Error reading profitable data"}, status=500)
+    return JsonResponse({"message": "Only GET requests are allowed."}, status=400)

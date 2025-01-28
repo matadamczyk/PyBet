@@ -20,6 +20,20 @@ export const usePybetStore = defineStore('pybet', () => {
 
   const isLoading = ref<boolean>(false)
 
+  const pycoins = ref<number>(0)
+
+  const updatePycoins = (amount: number) => {
+    pycoins.value = amount
+  }
+
+  const deductPycoins = (amount: number) => {
+    if (pycoins.value >= amount) {
+      pycoins.value -= amount
+      return true
+    }
+    return false
+  }
+
   const fetchMatches = async () => {
     isLoading.value = true
     try {
@@ -37,5 +51,5 @@ export const usePybetStore = defineStore('pybet', () => {
     }
   }
 
-  return { isLogged, logout, betEvents, tokens, fetchMatches, matches, isLoading }
+  return { isLogged, logout, betEvents, tokens, fetchMatches, matches, isLoading, pycoins, updatePycoins, deductPycoins }
 })

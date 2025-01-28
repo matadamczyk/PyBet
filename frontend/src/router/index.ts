@@ -11,6 +11,11 @@ const routes = [
     name: 'Sports',
     component: () => import('@/components/main-cards/bets-routes/LeagueCard.vue'),
   },
+  {
+    path: '/account',
+    name: 'Account',
+    component: () => import('@/components/main-cards/bets-routes/AccountCard.vue'),
+  },
 ]
 
 const router = createRouter({

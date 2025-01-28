@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register_account, sign_in, user_picked_option, get_user_picked_options
+from .views import register_account, sign_in, user_picked_option, get_user_picked_options, get_profitable_odds
 from . import views
 
 urlpatterns = [
@@ -13,5 +13,5 @@ urlpatterns = [
     path("matches/", views.matches, name="matches"),
     path('user_picked_option/', user_picked_option, name='user_picked_option'),
     path('get_user_picked_options/', get_user_picked_options, name='get_user_picked_options'),
-    path('odds') # TODO: add odds view
+    path('profitable/', get_profitable_odds, name='get_profitable_odds'),
 ]

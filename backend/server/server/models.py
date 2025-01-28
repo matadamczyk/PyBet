@@ -21,6 +21,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    pycoins = models.FloatField(default=0.0)
     groups = models.ManyToManyField(Group, related_name='useraccount_set', blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name='useraccount_set', blank=True)
 
@@ -37,3 +38,4 @@ class UserPickedOption(models.Model):
     date = models.DateField()
     selectedOdds = models.FloatField()
     stake = models.FloatField()
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE) 
