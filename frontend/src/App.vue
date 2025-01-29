@@ -29,7 +29,6 @@ onMounted(async () => {
     }
   }
 })
-
 </script>
 
 <style>

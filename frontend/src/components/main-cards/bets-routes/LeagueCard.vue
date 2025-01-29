@@ -63,8 +63,8 @@ import { usePybetStore } from '../../../stores/store'
 import type { Bet } from '../../../types/Bet.interface'
 
 interface OddsData {
-  id: string;
-  outcome: string;
+  id: string
+  outcome: string
 }
 
 defineProps<{ selectedLeague: string }>()
