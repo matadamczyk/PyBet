@@ -19,7 +19,8 @@
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "cd backend/server && python manage.py runserver",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "install:all": "npm install && pip install -r requirements.txt"
+    "install:all": "npm install && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt",
+    "migrate": "cd backend/server && python manage.py migrate"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
