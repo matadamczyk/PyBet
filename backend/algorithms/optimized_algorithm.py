@@ -4,10 +4,11 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 import joblib
 import warnings
+import os
 warnings.filterwarnings("ignore")
 
 def train_and_save_model():
-    df_dirty = pd.read_csv('backend/algorithms/oczyszczonyDataSet.csv')
+    df_dirty = pd.read_csv('oczyszczonyDataSet.csv')
     df = df_dirty[['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'FTR', 'HTHG', 'HTAG', 'HTR', 'HS', 'AS', 'HST', 'AST', 
                    'HF', 'AF', 'HC', 'AC', 'HY', 'AY', 'HR', 'AR']]
     avg_home_scored = float(df.FTHG.sum()) / len(df)
@@ -55,13 +56,19 @@ def train_and_save_model():
     joblib.dump(table, 'team_strengths.pkl')
 
 def predict_match_outcome(home_team, away_team):
-    model = joblib.load('mlp_model.pkl')
-    scaler = joblib.load('scaler.pkl')
-    table = joblib.load('team_strengths.pkl')
+    # Get the absolute path to the current directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Load the model, scaler, and table using absolute paths
+    model = joblib.load(os.path.join(current_dir, 'mlp_model.pkl'))
+    scaler = joblib.load(os.path.join(current_dir, 'scaler.pkl'))
+    table = joblib.load(os.path.join(current_dir, 'team_strengths.pkl'))
+    
     home_HAS = table[table['Team'] == home_team]['HAS'].values[0]
     home_HDS = table[table['Team'] == home_team]['HDS'].values[0]
     away_AAS = table[table['Team'] == away_team]['AAS'].values[0]
     away_ADS = table[table['Team'] == away_team]['ADS'].values[0]
+    
     match_features = [[home_HAS, home_HDS, away_AAS, away_ADS, 0, 0, 0, 0]]
     match_features_scaled = scaler.transform(match_features)
     probabilities = model.predict_proba(match_features_scaled)[0]
@@ -69,8 +76,11 @@ def predict_match_outcome(home_team, away_team):
     draw_prob = probabilities[1]
     away_win_prob = probabilities[0]
     match_id = f"{home_team}:{away_team}"
-    return [match_id,home_win_prob,draw_prob, away_win_prob]
+    
+    return [match_id, home_win_prob, draw_prob, away_win_prob]
 
 if __name__ == "__main__":
-    train_and_save_model() # zakomentowac po wywolaniu
-    predict_match_outcome('Liverpool', 'Fulham')
+    # train_and_save_model() # zakomentowac po wywolaniu
+    # predict_match_outcome('Liverpool', 'Fulham')
+    print(predict_match_outcome('Liverpool', 'Fulham'))
+    print(predict_match_outcome("Nott'm Forest", 'Brighton'))

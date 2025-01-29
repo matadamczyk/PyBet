@@ -28,7 +28,7 @@ def main_func():
         chance_data = predict_match_outcome(t1, t2)
         chances_data[match['id']] = chance_data
     profitable = find_profitable_events(odds_data, chances_data)
-    save_to_json(profitable, 'backend/data/profitable/profitable.json')
+    save_to_json(profitable, 'data/profitable/profitable.json')
 
 if __name__ == "__main__":
     main_func()

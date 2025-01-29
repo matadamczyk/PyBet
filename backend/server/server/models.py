@@ -21,6 +21,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    pycoins = models.FloatField(default=0.0)
     groups = models.ManyToManyField(Group, related_name='useraccount_set', blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name='useraccount_set', blank=True)
 
@@ -31,3 +32,11 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class UserPickedOption(models.Model):
+    matchTeams = models.CharField(max_length=25, null=True)
+    selectedOption = models.CharField(max_length=255)
+    date = models.DateField()
+    selectedOdds = models.FloatField()
+    stake = models.FloatField()
+    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, null=True) 

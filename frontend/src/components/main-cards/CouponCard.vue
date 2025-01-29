@@ -18,10 +18,10 @@
     </div>
     <div class="submit">
       <div class="info-row">
-        <button class="info" @click="handleDeposit">
+        <RouterLink class="info" to="/account">
           <p class="title">DEPOSIT</p>
           <i class="pi pi-wallet"></i>
-        </button>
+        </RouterLink>
         <button class="info">
           <p class="title">ODDS</p>
           <p class="value">
@@ -75,18 +75,62 @@ const handleRate = () => {
     alert('Please log in to change rate.')
     return
   }
+  
+  const newRate = prompt('Enter new rate:')
+  if (newRate && !isNaN(Number(newRate))) {
+    const newRateNum = Number(newRate)
+    if (newRateNum <= 0) {
+      alert('Rate must be greater than 0.')
+      return
+    }
+    if (newRateNum > store.pycoins) {
+      alert('Rate cannot be greater than your PyCoins balance.')
+      return
+    }
+    rate.value = newRateNum
+  }
 }
 
-const placeBet = () => {
+const placeBet = async () => {
   if (!store.isLogged) {
     alert('Please log in to place a bet.')
     return
-  } else if (store.betEvents.length === 0) {
+  } 
+  if (store.betEvents.length === 0) {
     alert('Choose sport events to place a bet.')
     return
-  } else {
-    alert('Bet successfully placed!')
+  }
+  if (!store.deductPycoins(rate.value)) {
+    alert('Insufficient PyCoins balance.')
     return
+  }
+
+  const betData = {
+    selectedOption: store.betEvents.map(bet => bet.selectedOption).join(', '),
+    date: new Date().toISOString().split('T')[0],
+    selectedOdds: odds.value,
+    stake: rate.value,
+    email: localStorage.getItem('userEmail'),
+    homeTeam: store.betEvents[0].homeTeam,
+    awayTeam: store.betEvents[0].awayTeam
+  }
+
+  const response = await fetch('http://localhost:8000/place-bet/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(betData),
+  })
+
+  if (response.ok) {
+    alert('Bet successfully placed!')
+    store.betEvents = []
+  } else {
+    const errorData = await response.json()
+    alert(errorData.message || 'Failed to place bet.')
+    store.updatePycoins(store.pycoins + rate.value)
   }
 }
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import UserAccount
+from .models import UserAccount, UserPickedOption
 
 class UserAccountAdmin(UserAdmin):
     model = UserAccount
@@ -19,4 +19,6 @@ class UserAccountAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
 
+
 admin.site.register(UserAccount, UserAccountAdmin)
+admin.site.register(UserPickedOption)
