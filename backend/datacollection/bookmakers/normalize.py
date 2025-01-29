@@ -9,6 +9,7 @@ def normalize_team_name(team_name):
         return "Wolves"
     return team_name
 
+
 def normalize_identifier(identifier):
     if "nottingham" in identifier.lower():
         if "forest" in identifier.lower():

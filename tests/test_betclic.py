@@ -1,6 +1,11 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from backend.datacollection.bookmakers.betclic import fetch_matches_overview, fetch_match_details, fetch_match_details_retry
+from backend.datacollection.bookmakers.betclic import (
+    fetch_matches_overview,
+    fetch_match_details,
+    fetch_match_details_retry,
+)
+
 
 def mock_response(content, status_code=200):
     mock_resp = MagicMock()
@@ -8,8 +13,9 @@ def mock_response(content, status_code=200):
     mock_resp.text = content
     return mock_resp
 
+
 class TestBetclic(unittest.TestCase):
-    
+
     @patch("backend.datacollection.bookmakers.betclic.requests.get")
     def test_fetch_matches_overview(self, mock_get):
         mock_html = """
@@ -25,10 +31,12 @@ class TestBetclic(unittest.TestCase):
         </html>
         """
         mock_get.return_value = mock_response(mock_html)
-        
-        with patch("backend.datacollection.bookmakers.betclic.fetch_match_details_retry"):
+
+        with patch(
+            "backend.datacollection.bookmakers.betclic.fetch_match_details_retry"
+        ):
             matches = fetch_matches_overview("link1")
-        
+
         match = matches[0]
         self.assertEqual(match["identifier"], "Team A:Team B")
         self.assertEqual(match["team1"], "Team A")

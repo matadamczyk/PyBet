@@ -1,8 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
 
+
 def get_bts(url):
     return (0, 0)
+
 
 def get_data(url, site_name="sts"):
     response = requests.get(url)
@@ -10,7 +12,9 @@ def get_data(url, site_name="sts"):
 
     soup = BeautifulSoup(content, "html.parser")
 
-    team_list = soup.find_all(class_="match-tile-event-details-teams__team match-tile-event-details-teams__team--1")
+    team_list = soup.find_all(
+        class_="match-tile-event-details-teams__team match-tile-event-details-teams__team--1"
+    )
 
     teams1 = []
     teams2 = []
@@ -20,7 +24,9 @@ def get_data(url, site_name="sts"):
         text = team.getText()
         teams1.append(text)
 
-    team_list = soup.find_all(class_="match-tile-event-details-teams__team match-tile-event-details-teams__team--2")
+    team_list = soup.find_all(
+        class_="match-tile-event-details-teams__team match-tile-event-details-teams__team--2"
+    )
 
     for team in team_list:
         text = team.getText()
@@ -65,17 +71,21 @@ def get_data(url, site_name="sts"):
             "course2": courses[i + 2],
             "courseBTS": 0,
             "courseNBTS": 0,
-            "site_name": site_name
+            "site_name": site_name,
         }
 
         data.append(temp)
 
     return data
 
+
 if __name__ == "__main__":
-    data = get_data("https://www.sts.pl/zaklady-bukmacherskie/pilka-nozna/anglia/premier-league/184/30862/86451")
+    data = get_data(
+        "https://www.sts.pl/zaklady-bukmacherskie/pilka-nozna/anglia/premier-league/184/30862/86451"
+    )
     print(data)
     print()
-    data = get_data("https://www.sts.pl/zaklady-bukmacherskie/pilka-nozna/anglia/2-liga/184/30862/86456")
+    data = get_data(
+        "https://www.sts.pl/zaklady-bukmacherskie/pilka-nozna/anglia/2-liga/184/30862/86456"
+    )
     print(data)
-

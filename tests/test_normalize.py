@@ -1,6 +1,9 @@
 import unittest
 from unittest.mock import patch, MagicMock, mock_open
-from backend.datacollection.bookmakers.normalize import normalize_team_name, normalize_identifier
+from backend.datacollection.bookmakers.normalize import (
+    normalize_team_name,
+    normalize_identifier,
+)
 
 
 class TestNormalize(unittest.TestCase):
@@ -13,8 +16,16 @@ class TestNormalize(unittest.TestCase):
         self.assertEqual(normalize_team_name("Chelsea"), "Chelsea")
 
     def test_normalize_identifier(self):
-        self.assertEqual(normalize_identifier("Nottingham Forest:Chelsea"), "Nott'm Forest:Chelsea")
-        self.assertEqual(normalize_identifier("Manchester Utd:Liverpool"), "Man United:Liverpool")
-        self.assertEqual(normalize_identifier("Manchester City:Wolves"), "Man City:Wolves")
-        self.assertEqual(normalize_identifier("Wolverhampton:Arsenal"), "Wolves:Arsenal")
+        self.assertEqual(
+            normalize_identifier("Nottingham Forest:Chelsea"), "Nott'm Forest:Chelsea"
+        )
+        self.assertEqual(
+            normalize_identifier("Manchester Utd:Liverpool"), "Man United:Liverpool"
+        )
+        self.assertEqual(
+            normalize_identifier("Manchester City:Wolves"), "Man City:Wolves"
+        )
+        self.assertEqual(
+            normalize_identifier("Wolverhampton:Arsenal"), "Wolves:Arsenal"
+        )
         self.assertEqual(normalize_identifier("Chelsea:Tottenham"), "Chelsea:Tottenham")

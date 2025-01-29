@@ -3,13 +3,17 @@ from bs4 import BeautifulSoup
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 from algorithms.optimized_algorithm import predict_match_outcome
 from datacollection.bookmakers.normalize import normalize_team_name
 
+
 def get_all_matches(url):
-    print(f"Fetching matches from: {url}") 
+    print(f"Fetching matches from: {url}")
+
     def correct_team_name(team_name):
         if team_name.startswith("Man."):
             return "Manchester " + team_name.split(".")[1]
@@ -46,24 +50,26 @@ def get_all_matches(url):
                 team1, team2 = match_text.split(" - ")
                 team1 = correct_team_name(team1)
                 team2 = correct_team_name(team2)
-                
+
                 norm_team1 = normalize_team_name(team1)
                 norm_team2 = normalize_team_name(team2)
-                
+
                 try:
-                    _, home_win_prob, draw_prob, away_win_prob = predict_match_outcome(norm_team1, norm_team2)
-                    
-                    home_odds = round(1/home_win_prob, 2) if home_win_prob > 0 else 0
-                    draw_odds = round(1/draw_prob, 2) if draw_prob > 0 else 0
-                    away_odds = round(1/away_win_prob, 2) if away_win_prob > 0 else 0
-                    
+                    _, home_win_prob, draw_prob, away_win_prob = predict_match_outcome(
+                        norm_team1, norm_team2
+                    )
+
+                    home_odds = round(1 / home_win_prob, 2) if home_win_prob > 0 else 0
+                    draw_odds = round(1 / draw_prob, 2) if draw_prob > 0 else 0
+                    away_odds = round(1 / away_win_prob, 2) if away_win_prob > 0 else 0
+
                     return {
                         "identifier": f"{team1}:{team2}",
                         "team1": team1,
                         "team2": team2,
                         "course1": format(home_odds, ".2f"),
-                        "courseX": format(draw_odds, ".2f"), 
-                        "course2": format(away_odds, ".2f")
+                        "courseX": format(draw_odds, ".2f"),
+                        "course2": format(away_odds, ".2f"),
                     }
                 except Exception as e:
                     print(f"Error predicting odds for {team1} vs {team2}: {str(e)}")
@@ -80,4 +86,3 @@ def get_all_matches(url):
             matches.append(match_data)
 
     return matches
-

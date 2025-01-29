@@ -2,11 +2,13 @@ import unittest
 from unittest.mock import patch, MagicMock
 from backend.datacollection.bookmakers.fortuna import get_all_matches
 
+
 def mock_response(content, status_code=200):
     mock_resp = MagicMock()
     mock_resp.status_code = status_code
     mock_resp.text = content
     return mock_resp
+
 
 class TestFortuna(unittest.TestCase):
 

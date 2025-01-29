@@ -22,13 +22,13 @@ class TestPredictMatchOutcome(unittest.TestCase):
 
         mock_joblib_load.side_effect = [mock_model, mock_scaler, mock_table]
 
-
         result = predict_match_outcome("Team A", "Team B")
 
         self.assertEqual(result[0], "Team A:Team B")
         self.assertAlmostEqual(result[1], 0.5, places=2)
         self.assertAlmostEqual(result[2], 0.3, places=2)
         self.assertAlmostEqual(result[3], 0.2, places=2)
+
 
 if __name__ == "__main__":
     unittest.main()

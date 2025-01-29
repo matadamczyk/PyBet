@@ -1,1 +1,1 @@
-AUTH_USER_MODEL = 'server.UserAccount'
+AUTH_USER_MODEL = "server.UserAccount"

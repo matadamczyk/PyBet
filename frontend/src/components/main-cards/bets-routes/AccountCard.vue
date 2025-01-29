@@ -3,7 +3,9 @@
     <h3>Account Overview</h3>
     <div class="main-container">
       <div class="balance">
-        <p>Your PyCoins <br><span>{{ pyCoins.toFixed(2) }}</span></p>
+        <p>
+          Your PyCoins <br /><span>{{ pyCoins.toFixed(2) }}</span>
+        </p>
         <button @click="addPyCoins">Add PyCoins</button>
         <button @click="showHistory = true">Betting History</button>
       </div>
@@ -16,7 +18,7 @@
             <div class="bet-header">{{ bet.matchTeams }}</div>
             <div class="bet-details">
               Pick: {{ bet.selectedOption }} | Odds: {{ bet.selectedOdds.toFixed(2) }}
-              <br>
+              <br />
               Stake: {{ bet.stake }} PyCoins | Date: {{ new Date(bet.date).toLocaleDateString() }}
             </div>
           </li>

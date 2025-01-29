@@ -75,7 +75,7 @@ const handleRate = () => {
     alert('Please log in to change rate.')
     return
   }
-  
+
   const newRate = prompt('Enter new rate:')
   if (newRate && !isNaN(Number(newRate))) {
     const newRateNum = Number(newRate)
@@ -95,7 +95,7 @@ const placeBet = async () => {
   if (!store.isLogged) {
     alert('Please log in to place a bet.')
     return
-  } 
+  }
   if (store.betEvents.length === 0) {
     alert('Choose sport events to place a bet.')
     return
@@ -106,13 +106,13 @@ const placeBet = async () => {
   }
 
   const betData = {
-    selectedOption: store.betEvents.map(bet => bet.selectedOption).join(', '),
+    selectedOption: store.betEvents.map((bet) => bet.selectedOption).join(', '),
     date: new Date().toISOString().split('T')[0],
     selectedOdds: odds.value,
     stake: rate.value,
     email: localStorage.getItem('userEmail'),
     homeTeam: store.betEvents[0].homeTeam,
-    awayTeam: store.betEvents[0].awayTeam
+    awayTeam: store.betEvents[0].awayTeam,
   }
 
   const response = await fetch('http://localhost:8000/place-bet/', {

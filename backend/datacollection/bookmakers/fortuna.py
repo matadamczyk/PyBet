@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 def get_all_matches(url, site_name="fortuna"):
     def correct_team_name(team_name):
         if team_name.startswith("Man."):
@@ -65,7 +66,7 @@ def get_all_matches(url, site_name="fortuna"):
                     "team1": team1,
                     "team2": team2,
                     **odds,
-                    "site_name": site_name
+                    "site_name": site_name,
                 }
 
         return None
@@ -79,6 +80,7 @@ def get_all_matches(url, site_name="fortuna"):
             matches.append(match_data)
 
     return matches
+
 
 if __name__ == "__main__":
     url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/1-anglia"

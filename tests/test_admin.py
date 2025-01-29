@@ -1,7 +1,9 @@
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'backend.server.app.settings'
+
+os.environ["DJANGO_SETTINGS_MODULE"] = "backend.server.app.settings"
 
 import django
+
 django.setup()
 
 from django.test import TestCase
@@ -13,6 +15,7 @@ from backend.server.server.models import UserAccount
 
 class MockRequest:
     pass
+
 
 class TestUserAccountAdmin(TestCase):
 
@@ -28,17 +31,17 @@ class TestUserAccountAdmin(TestCase):
         self.request = MockRequest()
 
     def test_list_display(self):
-        self.assertEqual(self.admin.list_display, ('email', 'is_staff', 'is_active'))
+        self.assertEqual(self.admin.list_display, ("email", "is_staff", "is_active"))
 
     def test_list_filter(self):
-        self.assertEqual(self.admin.list_filter, ('email', 'is_staff', 'is_active'))
+        self.assertEqual(self.admin.list_filter, ("email", "is_staff", "is_active"))
 
     def test_fieldsets(self):
         self.assertEqual(
             self.admin.fieldsets,
             (
-                (None, {'fields': ('email', 'password')}),
-                ('Permissions', {'fields': ('is_staff', 'is_active')}),
+                (None, {"fields": ("email", "password")}),
+                ("Permissions", {"fields": ("is_staff", "is_active")}),
             ),
         )
 
@@ -46,18 +49,27 @@ class TestUserAccountAdmin(TestCase):
         self.assertEqual(
             self.admin.add_fieldsets,
             (
-                (None, {
-                    'classes': ('wide',),
-                    'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')}
+                (
+                    None,
+                    {
+                        "classes": ("wide",),
+                        "fields": (
+                            "email",
+                            "password1",
+                            "password2",
+                            "is_staff",
+                            "is_active",
+                        ),
+                    },
                 ),
             ),
         )
 
     def test_search_fields(self):
-        self.assertEqual(self.admin.search_fields, ('email',))
+        self.assertEqual(self.admin.search_fields, ("email",))
 
     def test_ordering(self):
-        self.assertEqual(self.admin.ordering, ('email',))
+        self.assertEqual(self.admin.ordering, ("email",))
 
     def test_queryset(self):
         queryset = self.admin.get_queryset(self.request)
