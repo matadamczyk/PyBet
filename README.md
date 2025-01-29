@@ -37,11 +37,31 @@ The PyBet project is organized into two main directories: `backend` and `fronten
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/pybet.git
+git clone https://github.com/matadamczyk/PyBet.git
 cd pybet
 ```
 
-2. Install all dependencies (Node.js and Python):
+2. Create and activate Python virtual environment:
+
+On macOS and Linux:
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+```
+
+On Windows:
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+.\venv\Scripts\activate
+```
+
+3. Install all dependencies (Node.js and Python):
 ```bash
 npm run install:all
 ```
@@ -49,6 +69,16 @@ npm run install:all
 This command will:
 - Install Node.js dependencies for the root project
 - Install Python dependencies from requirements.txt
+
+4. Run database migrations:
+```bash
+npm run migrate
+```
+
+This command will:
+- Set up the database schema
+- Create necessary tables for user accounts and betting data
+- Initialize the Django database
 
 ### Running the Application
 
