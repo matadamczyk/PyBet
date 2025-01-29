@@ -18,10 +18,10 @@
     </div>
     <div class="submit">
       <div class="info-row">
-        <button class="info" @click="handleDeposit">
+        <RouterLink class="info" to="/account">
           <p class="title">DEPOSIT</p>
           <i class="pi pi-wallet"></i>
-        </button>
+        </RouterLink>
         <button class="info">
           <p class="title">ODDS</p>
           <p class="value">
@@ -110,14 +110,17 @@ const placeBet = async () => {
     date: new Date().toISOString().split('T')[0],
     selectedOdds: odds.value,
     stake: rate.value,
+    email: localStorage.getItem('userEmail'),
+    homeTeam: store.betEvents[0].homeTeam,
+    awayTeam: store.betEvents[0].awayTeam
   }
 
-  const response = await fetch('http://localhost:8000/bets/', {
+  const response = await fetch('http://localhost:8000/place-bet/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${store.tokens}`,
     },
+    credentials: 'include',
     body: JSON.stringify(betData),
   })
 
@@ -125,7 +128,8 @@ const placeBet = async () => {
     alert('Bet successfully placed!')
     store.betEvents = []
   } else {
-    alert('Failed to place bet.')
+    const errorData = await response.json()
+    alert(errorData.message || 'Failed to place bet.')
     store.updatePycoins(store.pycoins + rate.value)
   }
 }

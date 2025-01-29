@@ -34,6 +34,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 class UserPickedOption(models.Model):
+    matchTeams = models.CharField(max_length=25, null=True)
     selectedOption = models.CharField(max_length=255)
     date = models.DateField()
     selectedOdds = models.FloatField()

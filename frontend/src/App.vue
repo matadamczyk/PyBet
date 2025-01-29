@@ -1,7 +1,6 @@
 <template>
   <div class="app-card">
     <AppNavbar />
-    <AppRouteWatcher />
     <MainCard />
     <AppFooter />
   </div>
@@ -11,14 +10,24 @@
 import AppNavbar from './components/layout/AppNavbar.vue'
 import MainCard from './components/MainCard.vue'
 import AppFooter from './components/layout/AppFooter.vue'
-import AppRouteWatcher from './components/layout/AppRouteWatcher.vue'
-import { onBeforeMount, computed } from 'vue'
+import { onBeforeMount, computed, onMounted } from 'vue'
 import { usePybetStore } from './stores/store'
 
 const store = usePybetStore()
 
 onBeforeMount(async () => {
   await store.fetchMatches()
+})
+
+onMounted(async () => {
+  if (localStorage.getItem('isLogged') === 'true') {
+    store.isLogged = true
+    try {
+      await store.fetchUserPycoins()
+    } catch (error) {
+      console.error('Error fetching user pycoins:', error)
+    }
+  }
 })
 
 const matches = computed(() => store.matches)

@@ -59,10 +59,13 @@ export const usePybetStore = defineStore('pybet', () => {
   const fetchUserPycoins = async () => {
     if (isLogged.value) {
       try {
-        const response = await fetch('http://localhost:8000/user-pycoins/', {
+        const email = localStorage.getItem('userEmail')
+        const response = await fetch(`http://localhost:8000/user-pycoins/?email=${email}`, {
+          method: 'GET',
           headers: {
-            'Authorization': `Bearer ${tokens.value}`,
+            'Content-Type': 'application/json',
           },
+          credentials: 'include',
         })
         if (response.ok) {
           const data = await response.json()
@@ -74,5 +77,18 @@ export const usePybetStore = defineStore('pybet', () => {
     }
   }
 
-  return { isLogged, logout, betEvents, tokens, fetchMatches, matches, isLoading, pycoins, updatePycoins, deductPycoins, fetchUserPycoins, setTokens }
+  return {
+    isLogged,
+    logout,
+    betEvents,
+    tokens,
+    fetchMatches,
+    matches,
+    isLoading,
+    pycoins,
+    updatePycoins,
+    deductPycoins,
+    fetchUserPycoins,
+    setTokens,
+  }
 })

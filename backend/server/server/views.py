@@ -164,8 +164,15 @@ def user_picked_option(request):
 def get_user_picked_options(request):
     if request.method == 'GET':
         try:
-            options = UserPickedOption.objects.all().values()
+            email = request.GET.get('email')
+            if not email:
+                return JsonResponse({"message": "Email parameter is required."}, status=400)
+
+            user = UserAccount.objects.get(email=email)
+            options = UserPickedOption.objects.filter(user=user).values()
             return JsonResponse(list(options), safe=False)
+        except UserAccount.DoesNotExist:
+            return JsonResponse({"message": "User not found."}, status=404)
         except Exception as e:
             logging.error(f"Unexpected error: {e}")
             return JsonResponse({"message": "An unexpected error occurred."}, status=500)
@@ -234,10 +241,12 @@ def place_bet(request):
     
     try:
         data = json.loads(request.body)
-        user = request.user
+        email = data.get('email')
         
-        if not user.is_authenticated:
-            return JsonResponse({"message": "User not authenticated."}, status=401)
+        try:
+            user = UserAccount.objects.get(email=email)
+        except UserAccount.DoesNotExist:
+            return JsonResponse({"message": "User not found."}, status=404)
             
         if user.pycoins < data['stake']:
             return JsonResponse({"message": "Insufficient PyCoins."}, status=400)
@@ -247,16 +256,20 @@ def place_bet(request):
         
         UserPickedOption.objects.create(
             user=user,
+            matchTeams=f"{data['homeTeam']} vs {data['awayTeam']}",
             selectedOption=data['selectedOption'],
             date=data['date'],
             selectedOdds=data['selectedOdds'],
             stake=data['stake']
         )
         
-        return JsonResponse({
+        response = JsonResponse({
             "message": "Bet placed successfully",
             "pycoins": user.pycoins
         })
+        response["Access-Control-Allow-Origin"] = "http://localhost:5173"
+        response["Access-Control-Allow-Credentials"] = "true"
+        return response
     except Exception as e:
         return JsonResponse({"message": str(e)}, status=500)
 
@@ -265,7 +278,12 @@ def get_user_pycoins(request):
     if request.method != 'GET':
         return JsonResponse({"message": "Only GET requests are allowed."}, status=400)
         
-    if not request.user.is_authenticated:
-        return JsonResponse({"message": "User not authenticated."}, status=401)
-        
-    return JsonResponse({"pycoins": request.user.pycoins})
+    email = request.GET.get('email')
+    if not email:
+        return JsonResponse({"message": "Email parameter is required."}, status=400)
+    
+    try:
+        user = UserAccount.objects.get(email=email)
+        return JsonResponse({"pycoins": user.pycoins})
+    except UserAccount.DoesNotExist:
+        return JsonResponse({"message": "User not found."}, status=404)
