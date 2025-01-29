@@ -8,3 +8,4 @@ Requests==2.32.3
 scikit_learn==1.6.1
 selenium==4.27.1
 gunicorn==23.0.0
+django-cors-headers==4.3.1
