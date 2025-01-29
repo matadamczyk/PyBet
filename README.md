@@ -35,11 +35,41 @@ The PyBet project is organized into two main directories: `backend` and `fronten
 
 ### Installation
 
-To be added.
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/pybet.git
+cd pybet
+```
+
+2. Install all dependencies (Node.js and Python):
+```bash
+npm run install:all
+```
+
+This command will:
+- Install Node.js dependencies for the root project
+- Install Python dependencies from requirements.txt
 
 ### Running the Application
 
-To be added.
+1. Start both frontend and backend servers:
+```bash
+npm run start
+```
+
+This will concurrently run:
+- Frontend Vue.js server at `http://localhost:5173`
+- Backend Django server at `http://localhost:8000`
+
+Alternatively, you can start servers separately:
+
+```bash
+# Start only frontend
+npm run start:frontend
+
+# Start only backend
+npm run start:backend
+```
 
 ## Data Flow
 
