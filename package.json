@@ -10,7 +10,7 @@
     "test:e2e": "playwright test",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --fix",
+    "lint": "cd frontend && eslint . --fix",
     "format": "python3 scripts/format-cli.py js ts vue json html css py",
     "format:check": "python3 scripts/format-cli.py js ts vue json html css py --check",
     "test": "vitest run",
