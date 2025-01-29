@@ -11,3 +11,4 @@ venv
 **/.DS_Store
 TODO.txt 
 package-lock.json
+**/dist

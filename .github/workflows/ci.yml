@@ -8,15 +8,9 @@ on:
     branches:
       - main
 
-stages:
-  - build
-  - test
-  - e2e
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,73 +24,78 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm install --prefix frontend
+        run: npm install
 
-      - name: Lint code
-        run: npm run lint --prefix frontend
+      - name: Build project
+        run: npm run build
 
-      - name: Type-check code
-        run: npm run type-check --prefix frontend
+  code-quality:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install pipx
+        run: python -m pip install --user pipx
+
+      - name: Install Black with pipx
+        run: pipx install black
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Type Check
+        run: npm run type-check
 
       - name: Check code formatting
         run: python3 scripts/format-cli.py js ts vue json html css py --check
 
-      # - name: Run unit tests
-      #   run: npm run test --prefix frontend/PyBet
+  tests:
+    needs: code-quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # - name: Generate code coverage report
-      #   run: npm run test:coverage --prefix frontend/PyBet
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: frontend/PyBet/coverage/*.json
-      #     flags: unittests
-      #     name: codecov-umbrella
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Build project
-        run: npm run build --prefix frontend
+      - name: Run Python tests
+        run: python -m unittest discover tests/
 
-  # e2e:
-  #   runs-on: ubuntu-latest
-  #   needs: build
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+      - name: Install Node.js dependencies
+        run: npm install
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: '18'
-
-  #     - name: Cache Node.js modules
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.os }}-node-${{ hashFiles('frontend/PyBet/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-node-
-
-  #     - name: Install dependencies
-  #       run: npm install --prefix frontend/PyBet
-
-  #     - name: Run end-to-end tests
-  #       run: npm run test:e2e --prefix frontend/PyBet
-
-  #     - name: Generate code coverage report for E2E tests
-  #       run: npm run test:e2e:coverage --prefix frontend/PyBet
-
-  #     - name: Upload coverage to Codecov
-  #       uses: codecov/codecov-action@v3
-  #       with:
-  #         token: ${{ secrets.CODECOV_TOKEN }}
-  #         files: frontend/PyBet/coverage/*.json
-  #         flags: e2etests
-  #         name: codecov-umbrella
+      - name: Run Frontend tests
+        run: npm run test
