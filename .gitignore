@@ -10,5 +10,5 @@ venv
 **/*.sqlite3
 **/.DS_Store
 TODO.txt 
-package-lock.json
+**/package-lock.json
 **/dist
