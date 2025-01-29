@@ -88,10 +88,8 @@ def train_and_save_model():
 
 
 def predict_match_outcome(home_team, away_team):
-    # Get the absolute path to the current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Load the model, scaler, and table using absolute paths
     model = joblib.load(os.path.join(current_dir, "mlp_model.pkl"))
     scaler = joblib.load(os.path.join(current_dir, "scaler.pkl"))
     table = joblib.load(os.path.join(current_dir, "team_strengths.pkl"))

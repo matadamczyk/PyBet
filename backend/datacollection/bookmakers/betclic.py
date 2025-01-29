@@ -43,7 +43,6 @@ def fetch_matches_overview(base_url, site_name="betclic"):
 
 
 def fetch_match_details_retry(match_url, delay=5):
-    # nie zdazylo sie zeby byly potrzebne wiecej niz 2 attempty
     for i in range(5):
         try:
             details = fetch_match_details(match_url)
