@@ -62,11 +62,16 @@ import { ref, defineProps, onBeforeMount } from 'vue'
 import { usePybetStore } from '../../../stores/store'
 import type { Bet } from '../../../types/Bet.interface'
 
+interface OddsData {
+  id: string;
+  outcome: string;
+}
+
 defineProps<{ selectedLeague: string }>()
 const store = usePybetStore()
 
 const selection = ref<{ [key: string]: string }>({})
-const oddsData = ref<any[]>([])
+const oddsData = ref<OddsData[]>([])
 
 const fetchOddsData = async () => {
   try {

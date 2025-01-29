@@ -63,13 +63,6 @@ const totalPrize = computed(() => {
 
 const store = usePybetStore()
 
-const handleDeposit = () => {
-  if (!store.isLogged) {
-    alert('Please log in to view deposit.')
-    return
-  }
-}
-
 const handleRate = () => {
   if (!store.isLogged) {
     alert('Please log in to change rate.')

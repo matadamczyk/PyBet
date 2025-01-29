@@ -10,7 +10,7 @@
 import AppNavbar from './components/layout/AppNavbar.vue'
 import MainCard from './components/MainCard.vue'
 import AppFooter from './components/layout/AppFooter.vue'
-import { onBeforeMount, computed, onMounted } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
 import { usePybetStore } from './stores/store'
 
 const store = usePybetStore()
@@ -30,7 +30,6 @@ onMounted(async () => {
   }
 })
 
-const matches = computed(() => store.matches)
 </script>
 
 <style>
