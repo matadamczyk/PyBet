@@ -38,7 +38,7 @@ The PyBet project is organized into two main directories: `backend` and `fronten
 1. Clone the repository:
 ```bash
 git clone https://github.com/matadamczyk/PyBet.git
-cd pybet
+cd PyBet
 ```
 
 2. Create and activate Python virtual environment:
