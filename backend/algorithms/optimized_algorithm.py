@@ -111,7 +111,7 @@ def predict_match_outcome(home_team, away_team):
 
 
 if __name__ == "__main__":
-    # train_and_save_model() # zakomentowac po wywolaniu
+    train_and_save_model() # zakomentowac po wywolaniu
     # predict_match_outcome('Liverpool', 'Fulham')
-    print(predict_match_outcome("Liverpool", "Fulham"))
-    print(predict_match_outcome("Nott'm Forest", "Brighton"))
+    # print(predict_match_outcome("Liverpool", "Fulham"))
+    # print(predict_match_outcome("Nott'm Forest", "Brighton"))
