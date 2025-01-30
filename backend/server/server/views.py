@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.csrf import (
     csrf_exempt,
-)  # Use only if testing without CSRF protection
+)  
 import json
 from .models import UserAccount, UserPickedOption
 from django.contrib.auth.hashers import make_password
@@ -12,11 +12,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 
-# from . import matches
 import sys
 import os
 
-# Add the project root directory to Python path
 sys.path.append(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 )
@@ -27,7 +25,6 @@ from datacollection.bookmakers.normalize import normalize_team_name
 User = get_user_model()
 
 
-# Create your views here.
 def home(request):
     return HttpResponse("hello")
 
@@ -55,7 +52,7 @@ def register_post(request):
         try:
             hashed_password = make_password(password)
             UserAccount.objects.create(email=email, password=hashed_password)
-            return redirect("users")  # Redirect to the users page
+            return redirect("users")  
         except IntegrityError:
             return JsonResponse(
                 {"message": "This email is already registered."}, status=400
@@ -70,9 +67,7 @@ def stats(request):
         return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
 
     try:
-        # Decode the JSON body
         body = json.loads(request.body)
-        # Extract the string value (assuming the string is sent with a key like "input")
         input_string = body.get("input")
 
         if not input_string:
@@ -80,10 +75,8 @@ def stats(request):
                 {"message": "Missing 'input' key in request body."}, status=400
             )
 
-        # Use the string as needed (pass it to betclic.main or other logic)
         data = betclic.main(input_string)
 
-        # Prepare the JSON response
         return JsonResponse({"result": data})
 
     except json.JSONDecodeError:
@@ -148,13 +141,6 @@ def sign_in(request):
     return JsonResponse({"message": "Only POST requests are allowed."}, status=400)
 
 
-# example of json to be sent
-# {
-#     "selectedOption": "Option A",
-#     "date": "2023-10-15",
-#     "selectedOdds": 2.5,
-#     "stake": 100.0
-# }
 @csrf_exempt
 def user_picked_option(request):
     if request.method == "POST":
