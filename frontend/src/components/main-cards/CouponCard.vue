@@ -260,4 +260,18 @@ li::after {
   font-weight: 500;
   font-size: 15px;
 }
+
+@media (min-aspect-ratio: 2560/1600) {
+  .coupon-container {
+    height: 35rem;
+  }
+  .info-row {
+    scale: 0.75;
+  }
+  .submit-button {
+    scale: 0.75;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+}
 </style>

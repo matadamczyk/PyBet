@@ -250,8 +250,18 @@ h6 {
 .profitable-legend {
   border: 3px solid var(--color-primary-green);
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: var(--color-grey-200);
   color: var(--color-primary-green);
+}
+
+@media (min-aspect-ratio: 2560/1600) {
+  .league-container {
+    scale: 0.8;
+    max-height: 80%;
+  }
+  .matches-container {
+    margin-top: 0rem;
+  }
 }
 </style>

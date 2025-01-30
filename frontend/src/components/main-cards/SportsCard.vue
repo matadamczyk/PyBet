@@ -123,4 +123,9 @@ li button {
 li button:hover {
   color: var(--color-grey-350);
 }
+@media (min-aspect-ratio: 2560/1600) {
+  .sports-card {
+    height: 35rem;
+  }
+}
 </style>

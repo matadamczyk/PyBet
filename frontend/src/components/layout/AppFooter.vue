@@ -44,4 +44,10 @@ i:hover,
 a:hover {
   color: var(--color-grey-200);
 }
+
+@media (min-aspect-ratio: 2560/1600) {
+  footer {
+    scale: 0.85;
+  }
+}
 </style>

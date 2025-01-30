@@ -208,4 +208,13 @@ li {
 button {
   margin: 0.5rem;
 }
+
+@media (min-aspect-ratio: 2560/1600) {
+  .account-container {
+    scale: 0.75;
+  }
+  .betting-history {
+    scale: 0.75;
+  }
+}
 </style>

@@ -5,7 +5,7 @@
       <RouterLink class="normal" to="/">Home</RouterLink>
       <RouterLink class="normal" to="/sports">Bets</RouterLink>
     </div>
-    <div class="flex space-x-8 mr-5 items-center">
+    <div class="flex space-x-8 items-center buttons-container">
       <button class="register" v-show="!store.isLogged" @click="showRegisterDialog">
         <span>Sign up</span>
       </button>
@@ -73,6 +73,10 @@ nav {
   font-size: 1.5rem;
   font-weight: 600;
   box-shadow: 0 2px 10px var(--color-grey-550);
+}
+
+.buttons-container {
+  margin-right: 1.25rem;
 }
 
 body {
@@ -157,5 +161,11 @@ a {
   font-weight: 700;
   font-size: 4rem;
   color: #fff;
+}
+
+@media (min-aspect-ratio: 2560/1600) {
+  .logout {
+    margin-right: 25rem !important;
+  }
 }
 </style>

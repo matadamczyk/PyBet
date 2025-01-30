@@ -50,4 +50,10 @@ p {
   background-color: var(--color-grey-150);
   box-shadow: 0 0 15px 0 var(--color-grey-200);
 }
+
+@media (min-aspect-ratio: 2560/1600) {
+  .home-card {
+    scale: 0.8;
+  }
+}
 </style>

@@ -73,4 +73,9 @@ i {
 .color2 {
   color: var(--color-primary-red);
 }
+@media (min-aspect-ratio: 2560/1600) {
+  .hint-card {
+    scale: 0.75;
+  }
+}
 </style>
