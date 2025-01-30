@@ -26,6 +26,8 @@ class UserAccountManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
+    class Meta:
+        app_label = "server"
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -45,6 +47,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
 
 class UserPickedOption(models.Model):
+    class Meta:
+        app_label = "server"
     matchTeams = models.CharField(max_length=25, null=True)
     selectedOption = models.CharField(max_length=255)
     date = models.DateField()
